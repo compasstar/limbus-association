@@ -7,8 +7,6 @@ import com.limbus.api.domain.type.Sinner;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-
-
 @Entity
 @Getter
 public class Identity {
@@ -50,13 +48,8 @@ public class Identity {
     @Embedded
     private PassiveSkill passiveSkill;
 
-//    @OneToMany(mappedBy = "identity")
-//    private List<OffenseSkill> offenseSkills = new ArrayList<>();
-//
-//    @OneToOne(mappedBy = "identity", fetch = FetchType.LAZY)
-//    private DefenseSkill defenseSkill;
-
-
+    @Embedded
+    private Sanity sanity;
 
 
 

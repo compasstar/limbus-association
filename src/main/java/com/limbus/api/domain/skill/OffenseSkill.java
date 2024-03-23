@@ -1,16 +1,13 @@
 package com.limbus.api.domain.skill;
 
 
-import com.limbus.api.domain.identity.Identity;
 import com.limbus.api.domain.type.CoinType;
 import com.limbus.api.domain.type.OffenseType;
 import com.limbus.api.domain.type.SinType;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import lombok.Getter;
 
-import static jakarta.persistence.FetchType.*;
-
+@Getter
 @Embeddable
 public class OffenseSkill {
 
@@ -49,12 +46,5 @@ public class OffenseSkill {
 
     //코인별 효과
     private String effect;
-
-//    //인격
-//    @ManyToOne(fetch = LAZY)
-//    @JoinColumn(name = "identity_id") // foreign key
-//    private Identity identity;
-//
-
 
 }

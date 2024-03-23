@@ -3,7 +3,9 @@ package com.limbus.api.domain.skill;
 import com.limbus.api.domain.type.PassiveSkillType;
 import com.limbus.api.domain.type.SinType;
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
 
+@Getter
 @Embeddable
 public class PassiveSkill {
 
