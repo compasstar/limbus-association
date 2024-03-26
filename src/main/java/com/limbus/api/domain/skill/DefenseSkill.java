@@ -4,15 +4,16 @@ import com.limbus.api.domain.identity.Identity;
 import com.limbus.api.domain.type.CoinType;
 import com.limbus.api.domain.type.DefenseType;
 import com.limbus.api.domain.type.SinType;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 
-@Embeddable
+@Entity
 @Getter
 public class DefenseSkill {
+
+    @Id @GeneratedValue
+    @Column(name = "defense_skill_id")
+    private Long id;
 
     //스킬 이름
     private String name;

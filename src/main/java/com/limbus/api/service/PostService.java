@@ -1,5 +1,6 @@
 package com.limbus.api.service;
 
+import com.limbus.api.domain.Post;
 import com.limbus.api.repository.PostRepository;
 import com.limbus.api.request.PostCreate;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,6 @@ public class PostService {
     private final PostRepository postRepository;
 
     public void write(PostCreate postCreate) {
-
+        postRepository.save(new Post(postCreate));
     }
 }

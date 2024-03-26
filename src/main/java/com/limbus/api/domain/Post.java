@@ -1,10 +1,13 @@
 package com.limbus.api.domain;
 
+import com.limbus.api.request.PostCreate;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
+@Getter
 public class Post {
 
     @Id
@@ -15,4 +18,9 @@ public class Post {
 
     @Lob
     private String content;
+
+    public Post(PostCreate postCreate) {
+        this.title = postCreate.getTitle();
+        this.content = postCreate.getContent();
+    }
 }

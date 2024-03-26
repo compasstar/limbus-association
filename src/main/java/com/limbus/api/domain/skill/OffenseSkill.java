@@ -5,15 +5,16 @@ import com.limbus.api.domain.identity.Identity;
 import com.limbus.api.domain.type.CoinType;
 import com.limbus.api.domain.type.OffenseType;
 import com.limbus.api.domain.type.SinType;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 @Getter
-@Embeddable
+@Entity
 public class OffenseSkill {
+
+    @Id @GeneratedValue
+    @Column(name = "offense_skill_id")
+    private Long id;
 
     //1스, 2스, 3스
     private Integer slot;
