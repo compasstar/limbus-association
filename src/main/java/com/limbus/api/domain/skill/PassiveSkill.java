@@ -1,8 +1,12 @@
 package com.limbus.api.domain.skill;
 
+import com.limbus.api.domain.identity.Identity;
 import com.limbus.api.domain.type.PassiveSkillType;
 import com.limbus.api.domain.type.SinType;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 
 @Getter
@@ -20,5 +24,9 @@ public class PassiveSkill {
     
     //효과
     private String effect;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "identity_id")
+    private Identity identity;
 
 }

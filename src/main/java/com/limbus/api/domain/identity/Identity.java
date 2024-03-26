@@ -7,6 +7,9 @@ import com.limbus.api.domain.type.Sinner;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 public class Identity {
@@ -17,6 +20,7 @@ public class Identity {
     private Long id;
 
     //수감자
+    @Enumerated(EnumType.STRING)
     private Sinner sinner;
 
     private String name;
@@ -33,25 +37,16 @@ public class Identity {
     @Embedded
     private Resistances resistances;
 
-    @Embedded
-    private OffenseSkill skill1;
+    @OneToMany(mappedBy = "identity")
+    private List<OffenseSkill> offenseSkills = new ArrayList<>();
 
-    @Embedded
-    private OffenseSkill skill2;
+    @OneToOne(mappedBy = "identity")
+    private DefenseSkill defenseSkill;
 
-    @Embedded
-    private OffenseSkill skill3;
-
-    @Embedded
-    private DefenseSkill skill4;
-
-    @Embedded
+    @OneToOne(mappedBy = "identity")
     private PassiveSkill passiveSkill;
 
     @Embedded
     private Sanity sanity;
-
-
-
 
 }
