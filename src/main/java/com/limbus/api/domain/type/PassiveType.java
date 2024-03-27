@@ -1,5 +1,5 @@
 package com.limbus.api.domain.type;
 
-public enum PassiveSkillType {
+public enum PassiveType {
     OWNED, RESONANCE
 }

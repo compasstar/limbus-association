@@ -26,9 +26,11 @@ public class OffenseSkill {
     private Integer level;
 
     //공격 유형
+    @Enumerated(EnumType.STRING)
     private OffenseType offenseType;
 
     //죄악 속성
+    @Enumerated(EnumType.STRING)
     private SinType sinType;
 
     //스킬 수량
@@ -44,6 +46,7 @@ public class OffenseSkill {
     private Integer coinNumber;
 
     //플러스코인, 마이너스코인
+    @Enumerated(EnumType.STRING)
     private CoinType coinType;
 
     //가중치

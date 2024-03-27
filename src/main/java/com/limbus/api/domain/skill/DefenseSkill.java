@@ -22,9 +22,11 @@ public class DefenseSkill {
     private Integer level;
 
     // 수비타입 (수비, 반격)
+    @Enumerated(EnumType.STRING)
     private DefenseType defenseType;
 
     //죄악 속성
+    @Enumerated(EnumType.STRING)
     private SinType sinType;
 
     //스킬 위력
@@ -34,6 +36,7 @@ public class DefenseSkill {
     private Integer coinPower;
 
     //코인 타입
+    @Enumerated(EnumType.STRING)
     private CoinType coinType;
 
     //코인별 효과
