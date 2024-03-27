@@ -14,7 +14,6 @@ import java.util.List;
 @Getter
 public class Identity {
 
-
     @Id @GeneratedValue
     @Column(name = "identity_id")
     private Long id;

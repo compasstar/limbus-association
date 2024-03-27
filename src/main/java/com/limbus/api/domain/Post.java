@@ -20,9 +20,16 @@ public class Post {
     @Lob
     private String content;
 
-    @Builder
+    @Builder(builderMethodName = "dtoBuilder", buildMethodName = "dtoBuild")
     public Post(PostCreate postCreate) {
         this.title = postCreate.getTitle();
         this.content = postCreate.getContent();
     }
+
+    @Builder
+    public Post(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
 }
