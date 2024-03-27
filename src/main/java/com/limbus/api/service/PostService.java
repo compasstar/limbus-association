@@ -13,6 +13,7 @@ public class PostService {
     private final PostRepository postRepository;
 
     public void write(PostCreate postCreate) {
-        postRepository.save(new Post(postCreate));
+        Post post = Post.builder().postCreate(postCreate).build();
+        postRepository.save(post);
     }
 }

@@ -2,6 +2,7 @@ package com.limbus.api.domain;
 
 import com.limbus.api.request.PostCreate;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +20,7 @@ public class Post {
     @Lob
     private String content;
 
+    @Builder
     public Post(PostCreate postCreate) {
         this.title = postCreate.getTitle();
         this.content = postCreate.getContent();

@@ -24,6 +24,7 @@ public class PassiveSkill {
     private Integer amount;
     
     //효과
+    @Lob
     private String effect;
 
     @OneToOne(fetch = FetchType.LAZY)

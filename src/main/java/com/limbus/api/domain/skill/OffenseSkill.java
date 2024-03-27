@@ -50,6 +50,7 @@ public class OffenseSkill {
     private Integer weight;
 
     //코인별 효과
+    @Lob
     private String effect;
 
     @ManyToOne(fetch = FetchType.LAZY)

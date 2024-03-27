@@ -37,6 +37,7 @@ public class DefenseSkill {
     private CoinType coinType;
 
     //코인별 효과
+    @Lob
     private String effect;
 
     @OneToOne(fetch = FetchType.LAZY)
