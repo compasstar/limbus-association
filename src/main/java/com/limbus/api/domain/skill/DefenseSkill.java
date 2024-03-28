@@ -1,10 +1,10 @@
 package com.limbus.api.domain.skill;
 
 import com.limbus.api.domain.identity.Identity;
-import com.limbus.api.domain.type.CoinType;
 import com.limbus.api.domain.type.DefenseType;
 import com.limbus.api.domain.type.SinType;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 
 @Entity
@@ -35,16 +35,32 @@ public class DefenseSkill {
     //코인 위력
     private Integer coinPower;
 
-    //코인 타입
-    @Enumerated(EnumType.STRING)
-    private CoinType coinType;
-
     //코인별 효과
-    @Lob
-    private String effect;
+    @OneToOne(mappedBy = "defenseSkill")
+    private SkillEffect skillEffect;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "identity_id")
     private Identity identity;
 
+    public void setIdentity(Identity identity) {
+        this.identity = identity;
+    }
+
+
+    @Builder
+    public DefenseSkill(String name, Integer level, DefenseType defenseType, SinType sinType, Integer skillPower, Integer coinPower, SkillEffect skillEffect) {
+        this.name = name;
+        this.level = level;
+        this.defenseType = defenseType;
+        this.sinType = sinType;
+        this.skillPower = skillPower;
+        this.coinPower = coinPower;
+        addSkillEffect(skillEffect);
+    }
+
+    private void addSkillEffect(SkillEffect skillEffect) {
+        this.skillEffect = skillEffect;
+        skillEffect.setDefenseSkill(this);
+    }
 }

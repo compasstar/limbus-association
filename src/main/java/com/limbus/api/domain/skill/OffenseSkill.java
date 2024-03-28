@@ -2,10 +2,10 @@ package com.limbus.api.domain.skill;
 
 
 import com.limbus.api.domain.identity.Identity;
-import com.limbus.api.domain.type.CoinType;
 import com.limbus.api.domain.type.OffenseType;
 import com.limbus.api.domain.type.SinType;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -45,19 +45,40 @@ public class OffenseSkill {
     //코인개수
     private Integer coinNumber;
 
-    //플러스코인, 마이너스코인
-    @Enumerated(EnumType.STRING)
-    private CoinType coinType;
-
     //가중치
     private Integer weight;
 
     //코인별 효과
-    @Lob
-    private String effect;
+    @OneToOne(mappedBy = "offenseSkill")
+    private SkillEffect skillEffect;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "identity_id")
     private Identity identity;
 
+    public void setIdentity(Identity identity) {
+        this.identity = identity;
+    }
+
+
+    @Builder
+    public OffenseSkill(Integer slot, String name, Integer level, OffenseType offenseType, SinType sinType, Integer amount, Integer skillPower, Integer coinPower, Integer coinNumber, Integer weight, SkillEffect skillEffect) {
+        this.slot = slot;
+        this.name = name;
+        this.level = level;
+        this.offenseType = offenseType;
+        this.sinType = sinType;
+        this.amount = amount;
+        this.skillPower = skillPower;
+        this.coinPower = coinPower;
+        this.coinNumber = coinNumber;
+        this.weight = weight;
+        addSkillEffect(skillEffect);
+    }
+
+    private void addSkillEffect(SkillEffect skillEffect) {
+        this.skillEffect = skillEffect;
+        skillEffect.setOffenseSkill(this);
+    }
 }

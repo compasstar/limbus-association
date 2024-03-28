@@ -5,13 +5,16 @@ import com.limbus.api.domain.skill.OffenseSkill;
 import com.limbus.api.domain.skill.PassiveSkill;
 import com.limbus.api.domain.type.Sinner;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Identity {
 
     @Id @GeneratedValue
@@ -42,10 +45,42 @@ public class Identity {
     @OneToOne(mappedBy = "identity")
     private DefenseSkill defenseSkill;
 
-    @OneToOne(mappedBy = "identity")
-    private PassiveSkill passiveSkill;
+    @OneToMany(mappedBy = "identity")
+    private List<PassiveSkill> passiveSkills = new ArrayList<>();
 
     @Embedded
     private Sanity sanity;
 
+
+    @Builder
+    public Identity(Sinner sinner, String name, Integer rarity, Status status, Resistances resistances, List<OffenseSkill> offenseSkills, DefenseSkill defenseSkill, List<PassiveSkill> passiveSkills, Sanity sanity) {
+        this.sinner = sinner;
+        this.name = name;
+        this.rarity = rarity;
+        this.status = status;
+        this.resistances = resistances;
+        for (OffenseSkill offenseSkill : offenseSkills) {
+            addOffenseSkill(offenseSkill);
+        }
+        addDefenseSkill(defenseSkill);
+        for (PassiveSkill passiveSkill : passiveSkills) {
+            addPassiveSkill(passiveSkill);
+        }
+        this.sanity = sanity;
+    }
+
+    private void addOffenseSkill(OffenseSkill offenseSkill) {
+        offenseSkills.add(offenseSkill);
+        offenseSkill.setIdentity(this);
+    }
+
+    private void addDefenseSkill(DefenseSkill defenseSkill) {
+        this.defenseSkill = defenseSkill;
+        defenseSkill.setIdentity(this);
+    }
+
+    private void addPassiveSkill(PassiveSkill passiveSkill) {
+        this.passiveSkills.add(passiveSkill);
+        passiveSkill.setIdentity(this);
+    }
 }

@@ -1,6 +1,7 @@
 package com.limbus.api.response.skill;
 
-import com.limbus.api.domain.type.CoinType;
+import com.limbus.api.domain.skill.DefenseSkill;
+import com.limbus.api.domain.skill.SkillEffect;
 import com.limbus.api.domain.type.DefenseType;
 import com.limbus.api.domain.type.SinType;
 import lombok.Getter;
@@ -14,6 +15,15 @@ public class DefenseSkillResponse {
     private SinType sinType;
     private Integer skillPower;
     private Integer coinPower;
-    private CoinType coinType;
-    private String effect;
+    private SkillEffect skillEffect;
+
+    public DefenseSkillResponse(DefenseSkill defenseSkill) {
+        name = defenseSkill.getName();
+        level = defenseSkill.getLevel();
+        defenseType = defenseSkill.getDefenseType();
+        sinType = defenseSkill.getSinType();
+        skillPower = defenseSkill.getSkillPower();
+        coinPower = defenseSkill.getCoinPower();
+        skillEffect = defenseSkill.getSkillEffect();
+    }
 }
