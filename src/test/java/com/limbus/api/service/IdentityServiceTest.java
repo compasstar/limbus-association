@@ -46,12 +46,8 @@ class IdentityServiceTest {
     @Autowired
     IdentityService identityService;
 
-
-    @Test
-    @DisplayName("인격 1개 조회")
-    void getIdentityTest() {
-        //given
-
+    @BeforeEach
+    void save_피쿼드호_선장() {
         /**
          * 스테이터스 & 내성정보
          */
@@ -94,8 +90,8 @@ class IdentityServiceTest {
         SkillEffect skillEffect2 = SkillEffect.builder()
                 .effect("[전투 시작시] 조작 패널에서 자신의 양 옆의 아군에게 공격 레벨 증가 3 부여\n[사용시] 가장 높은 공명의 공명당 20% 확률로 조작 패널에서 자신의 우측에 위치한 아군에게 이번 턴에 원호 공격을 명령함\n- 가장 높은 완전 공명의 합이 4 이상이면, 대상에게 피해량 증가 2 부여\n- 오만 완전 공명의 합이 4 이상이면, 오만 위력 증가 2 추가 부여")
                 .onHitEffects(List.of(
-                        OnHitEffect.builder().coin(2).effect("[적중시] 출혈 2 부여").build(),
-                        OnHitEffect.builder().coin(3).effect("[적중시] 화상 1 부여").build()
+                                OnHitEffect.builder().coin(2).effect("[적중시] 출혈 2 부여").build(),
+                                OnHitEffect.builder().coin(3).effect("[적중시] 화상 1 부여").build()
                         )
                 )
                 .build();
@@ -121,9 +117,9 @@ class IdentityServiceTest {
         SkillEffect skillEffect3 = SkillEffect.builder()
                 .effect("대상의 잃은 체력 1%당 피해랑 + 0.3% (최대 30%)\n대상의 출혈 5당 코인 위력 + 1 (최대 2)\n[공격 종료시] 적이 흐트러짐이 되었거나 사망했으면, 정신력이 가장 낮은 아군 1 + (가장 높은 완전 공명 수/2)명의 정신력 10 회복, 호흡 2, 호흡 횟수 4 부여 (최대 4회. 최대 회복 인원 수: 4명)")
                 .onHitEffects(List.of(
-                        OnHitEffect.builder().coin(2).effect("[적중시] 출혈 횟수 1 증가").build(),
-                        OnHitEffect.builder().coin(3).effect("[적중시] 출혈 2 부여").build(),
-                        OnHitEffect.builder().coin(4).effect("[적중시] 화상 횟수 1 증가").build()
+                                OnHitEffect.builder().coin(2).effect("[적중시] 출혈 횟수 1 증가").build(),
+                                OnHitEffect.builder().coin(3).effect("[적중시] 출혈 2 부여").build(),
+                                OnHitEffect.builder().coin(4).effect("[적중시] 화상 횟수 1 증가").build()
                         )
                 )
                 .build();
@@ -240,10 +236,18 @@ class IdentityServiceTest {
                 .build();
 
         identityRepository.save(identity);
+    }
+
+
+    @Test
+    @DisplayName("인격 1개 조회")
+    void getIdentityTest() {
+        //given
+        //BeforeEach -> save_피쿼드호_선장
 
         //when
+        Identity identity = identityRepository.findByName("피쿼드호 선장").get(0);
         IdentityResponse identityResponse = identityService.getIdentity(identity.getId());
-
 
         //then
         assertNotNull(identityResponse);
