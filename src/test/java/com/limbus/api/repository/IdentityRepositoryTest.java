@@ -6,16 +6,15 @@ import com.limbus.api.domain.identity.Sanity;
 import com.limbus.api.domain.identity.Status;
 import com.limbus.api.domain.skill.*;
 import com.limbus.api.domain.type.*;
+import com.limbus.api.repository.identity.IdentityRepository;
+import com.limbus.api.repository.skill.*;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

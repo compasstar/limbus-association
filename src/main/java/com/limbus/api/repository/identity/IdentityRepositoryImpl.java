@@ -1,7 +1,6 @@
-package com.limbus.api.repository;
+package com.limbus.api.repository.identity;
 
 import com.limbus.api.domain.identity.Identity;
-import com.limbus.api.domain.identity.QIdentity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 

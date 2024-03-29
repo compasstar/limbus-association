@@ -1,12 +1,10 @@
 package com.limbus.api.service;
 
 import com.limbus.api.domain.identity.Identity;
-import com.limbus.api.repository.IdentityRepository;
+import com.limbus.api.repository.identity.IdentityRepository;
 import com.limbus.api.response.IdentityResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

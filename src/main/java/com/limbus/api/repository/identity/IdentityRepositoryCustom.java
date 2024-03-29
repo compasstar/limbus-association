@@ -1,4 +1,4 @@
-package com.limbus.api.repository;
+package com.limbus.api.repository.identity;
 
 import com.limbus.api.domain.identity.Identity;
 
