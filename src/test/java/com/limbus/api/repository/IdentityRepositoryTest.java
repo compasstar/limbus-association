@@ -108,22 +108,18 @@ class IdentityRepositoryTest {
 
         SkillEffect skillEffectDefense = SkillEffect.builder()
                 .effect("[사용시] 조작 패널에서 자신의 양 옆에 위치한 아군의 정신력 5 회복")
-                .onHitEffects(new ArrayList<>())
                 .build();
 
         SkillEffect skillEffectPassive1 = SkillEffect.builder()
                 .effect("자신의 공격 종료 시에 대상이 사망했으면,\n- 호흡 4, 호흡 횟수를 2 얻고, 다음 턴에 과열된 가스 작살 상태가 됨\n- 자신을 제외한 정신력이 가장 낮은 아군 2명의 정신력 7 회복, 호흡 4 부여\n- 대상이 피쿼드호 선원이면, 정신력 5 추가 회복, 다음 턴에 관통 위력 증가 1 부여")
-                .onHitEffects(new ArrayList<>())
                 .build();
 
         SkillEffect skillEffectPassive2 = SkillEffect.builder()
                 .effect("대상이 <호수의 존재> 면 피해량 +10%")
-                .onHitEffects(new ArrayList<>())
                 .build();
 
         SkillEffect skillEffectPassive3 = SkillEffect.builder()
                 .effect("정신력이 가장 높은 아군 1명이 자신의 공격 종료 시 대상이 사망했으면, 호흡 2, 호흡 회수 2 얻음(턴 당 2회)")
-                .onHitEffects(new ArrayList<>())
                 .build();
 
         skillEffectRepository.save(skillEffect1);
@@ -330,15 +326,12 @@ class IdentityRepositoryTest {
                 .build();
         SkillEffect skillEffectDefense = SkillEffect.builder()
                 .effect("[회피 성공시] 자신의 충전 횟수 1 증가")
-                .onHitEffects(new ArrayList<>())
                 .build();
         SkillEffect skillEffectPassive1 = SkillEffect.builder()
                 .effect("전투 시작 시 공격 위력 증가를 (우울 공명 수/3)만큼 얻음\n턴 종료시 이번 턴에 피해를 주지 못한 경우 정신력 -15")
-                .onHitEffects(new ArrayList<>())
                 .build();
         SkillEffect skillEffectPassive2 = SkillEffect.builder()
                 .effect("정신력이 가장 낮은 아군 1명 타격 스킬의 피해량 + 10%")
-                .onHitEffects(new ArrayList<>())
                 .build();
 
         skillEffectRepository.save(skillEffect1);

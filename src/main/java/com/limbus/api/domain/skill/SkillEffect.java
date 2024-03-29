@@ -48,9 +48,13 @@ public class SkillEffect {
     @Builder
     public SkillEffect(String effect, List<OnHitEffect> onHitEffects) {
         this.effect = effect;
-        for (OnHitEffect onHitEffect : onHitEffects) {
-            addOnHitEffect(onHitEffect);
+
+        if (onHitEffects != null) {
+            for (OnHitEffect onHitEffect : onHitEffects) {
+                addOnHitEffect(onHitEffect);
+            }
         }
+
         this.onHitEffects = onHitEffects;
     }
 
