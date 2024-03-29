@@ -493,7 +493,12 @@ class IdentityServiceTest {
         assertEquals(160, identityResponse.getStatus().getHp());
         assertEquals(3, identityResponse.getOffenseSkills().get(0).getAmount());
         assertEquals("대상이 <호수의 존재> 면 피해량 +10%", identityResponse.getPassiveSkills().get(1).getSkillEffect().getEffect());
+    }
 
+    @Test
+    @DisplayName("없는 인격 조회 -> throws IllegalArgumentException")
+    void getNullIdentityTest() {
+        assertThrows(IllegalArgumentException.class, () -> identityService.getIdentity(9999L));
     }
 
 }
