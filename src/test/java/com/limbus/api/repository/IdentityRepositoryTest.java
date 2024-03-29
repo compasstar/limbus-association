@@ -486,12 +486,14 @@ class IdentityRepositoryTest {
     @Test
     void findById() {
         //given
+        Long id = identityRepository.findByName("피쿼드호 선장").get(0).getId();
 
         //when
-        Identity identity = identityRepository.findById(0L).get();
+        Identity identity = identityRepository.findById(id).get();
 
         //then
         assertNotNull(identity);
+        assertEquals(2, identityRepository.count());
         assertEquals(37, identity.getStatus().getDefenseLevel());
         assertEquals(2, identity.getOffenseSkills().get(1).getSkillEffect().getOnHitEffects().size());
     }
