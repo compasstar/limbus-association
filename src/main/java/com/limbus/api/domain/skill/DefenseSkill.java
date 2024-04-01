@@ -1,5 +1,6 @@
 package com.limbus.api.domain.skill;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.limbus.api.domain.identity.Identity;
 import com.limbus.api.domain.type.DefenseType;
 import com.limbus.api.domain.type.SinType;
@@ -39,6 +40,7 @@ public class DefenseSkill {
     @OneToOne(mappedBy = "defenseSkill")
     private SkillEffect skillEffect;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "identity_id")
     private Identity identity;

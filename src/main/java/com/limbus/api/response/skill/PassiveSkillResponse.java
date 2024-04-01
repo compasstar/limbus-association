@@ -13,13 +13,13 @@ public class PassiveSkillResponse {
     private SinType sinType;
     private PassiveType passiveType;
     private Integer amount;
-    private SkillEffect skillEffect;
+    private SkillEffectResponse skillEffect;
 
     public PassiveSkillResponse(PassiveSkill passiveSkill) {
         name = passiveSkill.getName();
         sinType = passiveSkill.getSinType();
         passiveType = passiveSkill.getPassiveType();
         amount = passiveSkill.getAmount();
-        skillEffect = passiveSkill.getSkillEffect();
+        skillEffect = new SkillEffectResponse(passiveSkill.getSkillEffect());
     }
 }

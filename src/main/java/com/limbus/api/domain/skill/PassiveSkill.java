@@ -1,5 +1,6 @@
 package com.limbus.api.domain.skill;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.limbus.api.domain.identity.Identity;
 import com.limbus.api.domain.type.PassiveType;
 import com.limbus.api.domain.type.SinType;
@@ -36,6 +37,7 @@ public class PassiveSkill {
     @OneToOne(mappedBy = "passiveSkill")
     private SkillEffect skillEffect;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "identity_id")
     private Identity identity;

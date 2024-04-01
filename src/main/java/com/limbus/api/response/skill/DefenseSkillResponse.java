@@ -15,7 +15,7 @@ public class DefenseSkillResponse {
     private SinType sinType;
     private Integer skillPower;
     private Integer coinPower;
-    private SkillEffect skillEffect;
+    private SkillEffectResponse skillEffect;
 
     public DefenseSkillResponse(DefenseSkill defenseSkill) {
         name = defenseSkill.getName();
@@ -24,6 +24,6 @@ public class DefenseSkillResponse {
         sinType = defenseSkill.getSinType();
         skillPower = defenseSkill.getSkillPower();
         coinPower = defenseSkill.getCoinPower();
-        skillEffect = defenseSkill.getSkillEffect();
+        skillEffect = new SkillEffectResponse(defenseSkill.getSkillEffect());
     }
 }

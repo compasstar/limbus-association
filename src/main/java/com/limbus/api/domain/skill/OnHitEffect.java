@@ -1,5 +1,6 @@
 package com.limbus.api.domain.skill;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,8 +18,9 @@ public class OnHitEffect {
     @Lob
     private String effect;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "skill_id")
+    @JoinColumn(name = "skill_effect_id")
     private SkillEffect skillEffect;
 
     public void setSkillEffect(SkillEffect skillEffect) {

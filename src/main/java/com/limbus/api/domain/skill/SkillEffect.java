@@ -1,5 +1,6 @@
 package com.limbus.api.domain.skill;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,14 +22,17 @@ public class SkillEffect {
     @OneToMany(mappedBy = "skillEffect")
     private List<OnHitEffect> onHitEffects = new ArrayList<>();
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "offense_skill_id")
     private OffenseSkill offenseSkill;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "defense_skill_id")
     private DefenseSkill defenseSkill;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "passive_skill_id")
     private PassiveSkill passiveSkill;

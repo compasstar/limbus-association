@@ -18,7 +18,7 @@ public class OffenseSkillResponse {
     private Integer skillPower;
     private Integer coinNumber;
     private Integer weight;
-    private SkillEffect skillEffect;
+    private SkillEffectResponse skillEffect;
 
 
     public OffenseSkillResponse(OffenseSkill offenseSkill) {
@@ -31,7 +31,7 @@ public class OffenseSkillResponse {
         skillPower = offenseSkill.getSkillPower();
         coinNumber = offenseSkill.getCoinNumber();
         weight = offenseSkill.getWeight();
-        skillEffect = offenseSkill.getSkillEffect();
+        skillEffect = new SkillEffectResponse(offenseSkill.getSkillEffect());
     }
 
 }
