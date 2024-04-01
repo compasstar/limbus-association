@@ -40,7 +40,6 @@ public class DefenseSkill {
     @OneToOne(mappedBy = "defenseSkill")
     private SkillEffect skillEffect;
 
-    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "identity_id")
     private Identity identity;

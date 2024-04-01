@@ -18,7 +18,6 @@ public class OnHitEffect {
     @Lob
     private String effect;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "skill_effect_id")
     private SkillEffect skillEffect;

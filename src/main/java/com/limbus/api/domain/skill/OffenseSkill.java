@@ -54,7 +54,6 @@ public class OffenseSkill {
     private SkillEffect skillEffect;
 
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "identity_id")
     private Identity identity;

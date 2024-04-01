@@ -500,7 +500,6 @@ class IdentityControllerTest {
         //given
         //@BeforeEach saveIdentities
         Identity identity = identityRepository.findByName("피쿼드호 선장").get(0);
-        System.out.println("TTT = " + identity.getOffenseSkills().get(0).getSkillEffect().getOnHitEffects().get(0).getCoin());
 
         //expected
         mockMvc.perform(get("/identity/{identityId}", identity.getId()))
