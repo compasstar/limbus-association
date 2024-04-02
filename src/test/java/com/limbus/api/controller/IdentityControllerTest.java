@@ -17,21 +17,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
-@Transactional
+@Transactional //테스트가 끝나면 자동으로 롤백시킨다
+@Rollback(value = false) // DB 에서 확인하고 싶으면 붙여주기
 @SpringBootTest
 class IdentityControllerTest {
 
@@ -508,5 +506,7 @@ class IdentityControllerTest {
                 .andExpect(jsonPath("$.status.hp").value(identity.getStatus().getHp()))
                 .andExpect(jsonPath("$.offenseSkills[0].skillEffect.onHitEffects[0].coin").value(identity.getOffenseSkills().get(0).getSkillEffect().getOnHitEffects().get(0).getCoin()))
                 .andDo(print());
+
+
     }
 }

@@ -520,7 +520,6 @@ class IdentityRepositoryTest {
 
     @Test
     void findByRarityTest() {
-
         //given
 
         //when
@@ -528,10 +527,6 @@ class IdentityRepositoryTest {
 
         //then
         assertEquals(2, identities.size());
-
-
-
-
     }
 
 
