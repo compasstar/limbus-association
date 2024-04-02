@@ -3,10 +3,13 @@ package com.limbus.api.service;
 import com.limbus.api.domain.Post;
 import com.limbus.api.repository.PostRepository;
 import com.limbus.api.request.PostCreate;
+import com.limbus.api.request.PostSearch;
 import com.limbus.api.response.PostResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,8 +32,10 @@ public class PostService {
         return PostResponse.builder().post(post).build();
     }
 
-    public List<PostResponse> getList() {
-        return postRepository.findAll().stream().map(PostResponse::new).collect(Collectors.toList());
+    public List<PostResponse> getList(PostSearch postSearch) {
+        return postRepository.getList(postSearch).stream()
+                .map(PostResponse::new)
+                .collect(Collectors.toList());
     }
 
 
