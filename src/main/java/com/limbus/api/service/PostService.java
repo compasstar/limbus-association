@@ -1,6 +1,7 @@
 package com.limbus.api.service;
 
 import com.limbus.api.domain.Post;
+import com.limbus.api.exception.PostNotFound;
 import com.limbus.api.repository.PostRepository;
 import com.limbus.api.request.PostCreate;
 import com.limbus.api.request.PostEdit;
@@ -25,8 +26,7 @@ public class PostService {
 
     public PostResponse get(Long id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
-
+                .orElseThrow(PostNotFound::new);
         return PostResponse.builder().post(post).build();
     }
 
@@ -38,15 +38,13 @@ public class PostService {
 
     public void edit(Long id, PostEdit postEdit) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("There is no Post of the id"));
+                .orElseThrow(PostNotFound::new);
         post.edit(postEdit);
     }
 
     public void delete(Long id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("There is no Post of the id."));
+                .orElseThrow(PostNotFound::new);
         postRepository.delete(post);
     }
-
-
 }

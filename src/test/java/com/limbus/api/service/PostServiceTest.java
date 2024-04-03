@@ -1,6 +1,7 @@
 package com.limbus.api.service;
 
 import com.limbus.api.domain.Post;
+import com.limbus.api.exception.PostNotFound;
 import com.limbus.api.repository.PostRepository;
 import com.limbus.api.request.PostCreate;
 import com.limbus.api.request.PostEdit;
@@ -17,8 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
@@ -72,7 +72,6 @@ class PostServiceTest {
         assertEquals(1L, postRepository.count());
         assertEquals("foo", response.getTitle());
         assertEquals("bar", response.getContent());
-
     }
 
     @Test
@@ -81,9 +80,9 @@ class PostServiceTest {
         //given
         List<Post> requestPosts = IntStream.range(1, 31)
                 .mapToObj(i -> Post.builder()
-                            .title("제목 " + i)
-                            .content("반포자이 " + i)
-                            .build())
+                        .title("제목 " + i)
+                        .content("반포자이 " + i)
+                        .build())
                 .collect(Collectors.toList());
         postRepository.saveAll(requestPosts);
 
@@ -141,6 +140,55 @@ class PostServiceTest {
 
         //then
         assertEquals(0, postRepository.count());
+    }
+
+    @Test
+    @DisplayName("글 1개 조회 - 존재하지 않는 글")
+    void test7() {
+        //given
+        Post post = Post.builder()
+                .title("호돌맨")
+                .content("반포자이")
+                .build();
+        postRepository.save(post);
+
+        //expected
+        assertThrows(PostNotFound.class, () ->
+                postService.get(post.getId() + 1L)
+        );
+    }
+
+    @Test
+    @DisplayName("게시글 삭제 - 존재하지 않는 글")
+    void test8() {
+        //given
+        Post post = Post.builder()
+                .title("호돌맨")
+                .content("반포자이")
+                .build();
+        postRepository.save(post);
+
+        //expected
+        assertThrows(PostNotFound.class, () -> postService.delete(post.getId() + 1L));
+    }
+
+    @Test
+    @DisplayName("글 내용 수정 - 존재하지 않는 글")
+    void test9() {
+        //given
+        Post post = Post.builder()
+                .title("호돌맨")
+                .content("반포자이")
+                .build();
+        postRepository.save(post);
+
+        PostEdit postEdit = PostEdit.builder()
+                .title("호돌맨")
+                .content("초가집")
+                .build();
+
+        //when expected
+        assertThrows(PostNotFound.class, () -> postService.edit(post.getId() + 1, postEdit));
     }
 
 }
