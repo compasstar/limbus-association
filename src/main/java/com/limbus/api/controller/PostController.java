@@ -1,22 +1,16 @@
 package com.limbus.api.controller;
 
-import com.limbus.api.domain.Post;
 import com.limbus.api.request.PostCreate;
+import com.limbus.api.request.PostEdit;
 import com.limbus.api.request.PostSearch;
 import com.limbus.api.response.PostResponse;
 import com.limbus.api.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -45,6 +39,16 @@ public class PostController {
     @GetMapping("/posts")
     public List<PostResponse> getList(@ModelAttribute PostSearch postSearch) {
         return postService.getList(postSearch);
+    }
+
+    @PatchMapping("/post/{postId}")
+    public void edit(@PathVariable("postId") Long postId, @RequestBody @Valid PostEdit request) {
+        postService.edit(postId, request);
+    }
+
+    @DeleteMapping("/posts/{postId}")
+    public void delete(@PathVariable("postId") Long postId) {
+        postService.delete(postId);
     }
 
 }

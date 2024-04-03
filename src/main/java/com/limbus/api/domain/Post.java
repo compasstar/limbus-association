@@ -1,14 +1,15 @@
 package com.limbus.api.domain;
 
 import com.limbus.api.request.PostCreate;
+import com.limbus.api.request.PostEdit;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
 @NoArgsConstructor
 @Getter
+@Entity
 public class Post {
 
     @Id
@@ -31,5 +32,16 @@ public class Post {
         this.title = title;
         this.content = content;
     }
+
+    public void edit(PostEdit postEdit) {
+        if (postEdit.getTitle() != null) {
+            title = postEdit.getTitle();
+        }
+        if (postEdit.getContent() != null) {
+            content = postEdit.getContent();
+        }
+    }
+
+
 
 }
