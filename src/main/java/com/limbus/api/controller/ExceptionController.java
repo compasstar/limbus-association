@@ -1,7 +1,10 @@
 package com.limbus.api.controller;
 
+import com.limbus.api.exception.HodologException;
+import com.limbus.api.exception.InvalidRequest;
 import com.limbus.api.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,6 +27,20 @@ public class ExceptionController {
             response.addValidation(fieldError.getField(), fieldError.getDefaultMessage());
         }
         return response;
+    }
+
+    @ExceptionHandler(HodologException.class)
+    public ResponseEntity<ErrorResponse> hodologException(HodologException e) {
+        int statusCode = e.getStatusCode();
+
+        ErrorResponse body = ErrorResponse.builder()
+                .code(String.valueOf(statusCode))
+                .message(e.getMessage())
+                .validation(e.getValidation())
+                .build();
+
+        return ResponseEntity.status(statusCode)
+                .body(body);
     }
 
 }

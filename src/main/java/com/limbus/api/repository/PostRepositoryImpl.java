@@ -1,14 +1,13 @@
 package com.limbus.api.repository;
 
 import com.limbus.api.domain.Post;
-import com.limbus.api.domain.QPost;
 import com.limbus.api.request.PostSearch;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-import static com.limbus.api.domain.QPost.*;
+import static com.limbus.api.domain.QPost.post;
 
 @RequiredArgsConstructor
 public class PostRepositoryImpl implements PostRepositoryCustom {
