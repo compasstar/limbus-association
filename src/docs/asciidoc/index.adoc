@@ -1,0 +1,14 @@
+= 호돌로그 API
+:toc:
+
+
+== 글 단건조회
+
+=== 요청
+include::{snippets}/index/http-request.adoc[]
+
+=== 응답
+include::{snippets}/index/http-response.adoc[]
+
+=== CURL
+include::{snippets}/index/curl-request.adoc[]

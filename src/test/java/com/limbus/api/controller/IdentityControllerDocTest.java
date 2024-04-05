@@ -1,35 +1,42 @@
 package com.limbus.api.controller;
 
-import com.limbus.api.domain.Post;
-import com.limbus.api.repository.PostRepository;
+import com.limbus.api.BeforeTest;
+import com.limbus.api.domain.identity.Identity;
+import com.limbus.api.repository.identity.IdentityRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.http.MediaType.*;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @ExtendWith(RestDocumentationExtension.class)
-public class PostControllerDocTest {
+public class IdentityControllerDocTest {
 
     private MockMvc mockMvc;
 
     @Autowired
-    private PostRepository postRepository;
+    private IdentityRepository identityRepository;
+
+    @Autowired
+    BeforeTest beforeTest;
+
+    @BeforeEach
+    void saveIdentities() {
+        beforeTest.saveIdentities();
+    }
 
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
@@ -39,21 +46,21 @@ public class PostControllerDocTest {
     }
 
     @Test
-    @DisplayName("글 단건 조회 테스트")
-    void test1() throws Exception {
+    @DisplayName("인격 1개 조회")
+    void getIdentityTest() throws Exception {
         //given
-        Post post = Post.builder()
-                .title("제목")
-                .content("내용")
-                .build();
-        postRepository.save(post);
+        Identity identity = identityRepository.findByName("피쿼드호 선장").get(0);
 
-        // expected
-        this.mockMvc.perform(get("/posts/{postId}", 1L).accept(APPLICATION_JSON))
-                .andDo(print())
+        //expected
+        mockMvc.perform(get("/identity/{identityId}", identity.getId()))
                 .andExpect(status().isOk())
-                .andDo(document("index"));
+                .andExpect(jsonPath("$.name").value("피쿼드호 선장"))
+                .andExpect(jsonPath("$.status.hp").value(identity.getStatus().getHp()))
+                .andExpect(jsonPath("$.offenseSkills[0].skillEffect.onHitEffects[0].coin").value(identity.getOffenseSkills().get(0).getSkillEffect().getOnHitEffects().get(0).getCoin()))
+                .andDo(print());
     }
+
+
 
 
 
