@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>호돌로그 API</title>
+<title>Limbus API</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -438,7 +438,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>호돌로그 API</h1>
+<h1>Limbus API</h1>
 <div class="details">
 <span id="revnumber">version 0.0.1-SNAPSHOT</span>
 </div>
@@ -463,11 +463,40 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_요청">요청</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /posts/1 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /identity/1 HTTP/1.1
 Accept: application/json
 Host: localhost:8080</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Unresolved directive in index.adoc - include::C:\Projects\limbus-association\build\generated-snippets/index/path-parameters.adoc[]</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">내용</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_응답">응답</h3>
@@ -475,17 +504,48 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 44
+Content-Length: 4070
 
-{"id":1,"title":"제목","content":"내용"}</code></pre>
+{"name":"피쿼드호 선장","rarity":3,"status":{"hp":160,"speed":"4-7","defenseLevel":37},"resistances":{"slashResistance":1.0,"pierceResistance":0.5,"bluntResistance":2.0},"offenseSkills":[{"slot":1,"name":"내 주위에 서리!","level":43,"offenseType":"PIERCE","sinType":"ENVY","amount":3,"skillPower":4,"coinNumber":2,"weight":1,"skillEffect":{"effect":"[전투 시작시] 조작 패널에서 자신의 양 옆의 아군에게 방어 레벨 증가 2 부여\n[사용시] 다음 턴에 최대 체력이 가장 높은 아군의 왼쪽 슬롯의 도발치가 (가장 높은 공명 수 )만큼 증가 (턴 당 1회)\n- 가장 높은 완전 공명의 합이 4이상이면, 효과 발동 시 보호 1 부여","onHitEffects":[{"coin":2,"effect":"[적중시] 출혈 2 부여"}]}},{"slot":2,"name":"끝까지 추적한다!","level":43,"offenseType":"PIERCE","sinType":"PRIDE","amount":2,"skillPower":4,"coinNumber":3,"weight":1,"skillEffect":{"effect":"[전투 시작시] 조작 패널에서 자신의 양 옆의 아군에게 공격 레벨 증가 3 부여\n[사용시] 가장 높은 공명의 공명당 20% 확률로 조작 패널에서 자신의 우측에 위치한 아군에게 이번 턴에 원호 공격을 명령함\n- 가장 높은 완전 공명의 합이 4 이상이면, 대상에게 피해량 증가 2 부여\n- 오만 완전 공명의 합이 4 이상이면, 오만 위력 증가 2 추가 부여","onHitEffects":[{"coin":2,"effect":"[적중시] 출혈 2 부여"},{"coin":3,"effect":"[적중시] 화상 1 부여"}]}},{"slot":3,"name":"집착의 작살","level":43,"offenseType":"PIERCE","sinType":"WRATH","amount":1,"skillPower":4,"coinNumber":4,"weight":1,"skillEffect":{"effect":"대상의 잃은 체력 1%당 피해랑 + 0.3% (최대 30%)\n대상의 출혈 5당 코인 위력 + 1 (최대 2)\n[공격 종료시] 적이 흐트러짐이 되었거나 사망했으면, 정신력이 가장 낮은 아군 1 + (가장 높은 완전 공명 수/2)명의 정신력 10 회복, 호흡 2, 호흡 횟수 4 부여 (최대 4회. 최대 회복 인원 수: 4명)","onHitEffects":[{"coin":2,"effect":"[적중시] 출혈 횟수 1 증가"},{"coin":3,"effect":"[적중시] 출혈 2 부여"},{"coin":4,"effect":"[적중시] 화상 횟수 1 증가"}]}}],"defenseSkill":{"name":"공포를 날려주지","level":37,"defenseType":"DEFENSE","sinType":"PRIDE","skillPower":10,"coinPower":4,"skillEffect":{"effect":"[사용시] 조작 패널에서 자신의 양 옆에 위치한 아군의 정신력 5 회복","onHitEffects":[]}},"passiveSkills":[{"name":"피쿼드호의 선장","sinType":"PRIDE","passiveType":"RESONANCE","amount":3,"skillEffect":{"effect":"자신의 공격 종료 시에 대상이 사망했으면,\n- 호흡 4, 호흡 횟수를 2 얻고, 다음 턴에 과열된 가스 작살 상태가 됨\n- 자신을 제외한 정신력이 가장 낮은 아군 2명의 정신력 7 회복, 호흡 4 부여\n- 대상이 피쿼드호 선원이면, 정신력 5 추가 회복, 다음 턴에 관통 위력 증가 1 부여","onHitEffects":[]}},{"name":"사냥 시간","sinType":null,"passiveType":null,"amount":null,"skillEffect":{"effect":"대상이 &lt;호수의 존재&gt; 면 피해량 +10%","onHitEffects":[]}},{"name":"선장의 명령","sinType":"PRIDE","passiveType":"RESONANCE","amount":3,"skillEffect":{"effect":"정신력이 가장 높은 아군 1명이 자신의 공격 종료 시 대상이 사망했으면, 호흡 2, 호흡 회수 2 얻음(턴 당 2회)","onHitEffects":[]}}],"sanity":{"panic":"한 턴 동안 행동하지 않음","factorsIncreasingSanity":"합 승리 시 합 횟수에 비례하여 증가\n(증가량: 기본 값 10, 2합부터 1합당 20%식 증가)\n적 처치 시 처치한 적의 레벨에 관계 없이 10 증가\n적 처치 시 처치한 적의 레벨이 자신의 레벨 이상인 경우 15 증가\n아군 사망 시 사망한 아군의 레벨에 관계 없이 10 증가","factorsDecreasingSanity":"아군이 처치한 적의 레벨이 자신의 레벨 이상인 경우 5 감소. 원호 공격이 부여된 아군이 처치한 경우에는 감소하지 않음."}}</code></pre>
 </div>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시글 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">내용</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_curl">CURL</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/posts/1' -i -X GET \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/identity/1' -i -X GET \
     -H 'Accept: application/json'</code></pre>
 </div>
 </div>
@@ -496,7 +556,7 @@ Content-Length: 44
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-04-05 10:20:56 +0900
+Last updated 2024-04-08 11:16:36 +0900
 </div>
 </div>
 </body>

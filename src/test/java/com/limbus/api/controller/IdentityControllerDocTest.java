@@ -3,8 +3,6 @@ package com.limbus.api.controller;
 import com.limbus.api.BeforeTest;
 import com.limbus.api.domain.identity.Identity;
 import com.limbus.api.repository.identity.IdentityRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,9 +31,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class IdentityControllerDocTest {
 
     private MockMvc mockMvc;
-
-    @PersistenceContext
-    private EntityManager em;
 
     @Autowired
     private IdentityRepository identityRepository;
