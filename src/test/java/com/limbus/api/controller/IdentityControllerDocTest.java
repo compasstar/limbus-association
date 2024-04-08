@@ -70,7 +70,8 @@ public class IdentityControllerDocTest {
                                     fieldWithPath("rarity").description("등급"),
 
                                     fieldWithPath("status.hp").description("스테이터스 > 체력"),
-                                    fieldWithPath("status.speed").description("스테이터스 > 속도"),
+                                    fieldWithPath("status.minSpeed").description("스테이터스 > 속도최솟값"),
+                                    fieldWithPath("status.maxSpeed").description("스테이터스 > 속도최댓값"),
                                     fieldWithPath("status.defenseLevel").description("스테이터스 > 방어레벨"),
 
                                     fieldWithPath("resistances.slashResistance").description("내성 > 참격내성"),

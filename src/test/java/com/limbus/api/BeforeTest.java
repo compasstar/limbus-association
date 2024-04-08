@@ -220,7 +220,8 @@ public class BeforeTest {
         //Status & Resistances
         Status status = Status.builder()
                 .hp(160)
-                .speed("4-7")
+                .minSpeed(4)
+                .maxSpeed(7)
                 .defenseLevel(37)
                 .build();
         Resistances resistances = Resistances.builder()
@@ -426,7 +427,8 @@ public class BeforeTest {
         //스테이터스 & 내성정보
         Status status = Status.builder()
                 .hp(187)
-                .speed("3-7")
+                .minSpeed(3)
+                .maxSpeed(7)
                 .defenseLevel(43)
                 .build();
         Resistances resistances = Resistances.builder()

@@ -12,13 +12,15 @@ import lombok.NoArgsConstructor;
 public class Status {
 
     private Integer hp;
-    private String speed;
+    private Integer minSpeed;
+    private Integer maxSpeed;
     private Integer defenseLevel;
 
     @Builder
-    public Status(Integer hp, String speed, Integer defenseLevel) {
+    public Status(Integer hp, Integer minSpeed, Integer maxSpeed, Integer defenseLevel) {
         this.hp = hp;
-        this.speed = speed;
+        this.minSpeed = minSpeed;
+        this.maxSpeed = maxSpeed;
         this.defenseLevel = defenseLevel;
     }
 }
