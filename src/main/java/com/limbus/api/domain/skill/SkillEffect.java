@@ -1,6 +1,5 @@
 package com.limbus.api.domain.skill;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -55,8 +54,7 @@ public class SkillEffect {
                 addOnHitEffect(onHitEffect);
             }
         }
-
-        this.onHitEffects = onHitEffects;
+//        this.onHitEffects = onHitEffects;
     }
 
     private void addOnHitEffect(OnHitEffect onHitEffect) {

@@ -1,6 +1,5 @@
 package com.limbus.api.domain.skill;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.limbus.api.domain.identity.Identity;
 import com.limbus.api.domain.type.DefenseType;
 import com.limbus.api.domain.type.SinType;

@@ -1,6 +1,5 @@
-= 호돌로그 API
+= Limbus API
 :toc:
-
 
 == 글 단건조회
 
