@@ -1,6 +1,5 @@
 package com.limbus.api.response.skill;
 
-import com.limbus.api.domain.skill.SkillEffect;
 import com.limbus.api.domain.skill.OffenseSkill;
 import com.limbus.api.domain.type.OffenseType;
 import com.limbus.api.domain.type.SinType;
@@ -16,6 +15,7 @@ public class OffenseSkillResponse {
     private SinType sinType;
     private Integer amount;
     private Integer skillPower;
+    private Integer coinPower;
     private Integer coinNumber;
     private Integer weight;
     private SkillEffectResponse skillEffect;
@@ -29,6 +29,7 @@ public class OffenseSkillResponse {
         sinType = offenseSkill.getSinType();
         amount = offenseSkill.getAmount();
         skillPower = offenseSkill.getSkillPower();
+        coinPower = offenseSkill.getCoinPower();
         coinNumber = offenseSkill.getCoinNumber();
         weight = offenseSkill.getWeight();
         skillEffect = new SkillEffectResponse(offenseSkill.getSkillEffect());

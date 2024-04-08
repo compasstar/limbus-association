@@ -1,4 +1,4 @@
-= Limbus API
+= Hodolog API
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
