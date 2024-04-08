@@ -39,7 +39,7 @@ public class DefenseSkill {
     @OneToOne(mappedBy = "defenseSkill")
     private SkillEffect skillEffect;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "identity_id")
     private Identity identity;
 

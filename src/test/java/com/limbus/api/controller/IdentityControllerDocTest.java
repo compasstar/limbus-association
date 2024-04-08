@@ -1,7 +1,6 @@
 package com.limbus.api.controller;
 
 import com.limbus.api.BeforeTest;
-import com.limbus.api.domain.identity.Identity;
 import com.limbus.api.repository.identity.IdentityRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,23 +12,16 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
-import org.springframework.restdocs.payload.PayloadDocumentation;
-import org.springframework.restdocs.request.RequestDocumentation;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -93,14 +85,14 @@ public class IdentityControllerDocTest {
                                     fieldWithPath("offenseSkills[0].skillEffect.onHitEffects[0].coin").description("스킬1 > 스킬효과 > 적중시효과 > 코인"),
                                     fieldWithPath("offenseSkills[0].skillEffect.onHitEffects[0].effect").description("스킬1 > 스킬효과 > 적중시효과 > 효과"),
 
-                                    fieldWithPath("defenseSkill.name").description("수비 > 이름"),
-                                    fieldWithPath("defenseSkill.level").description("수비 > 수비레벨"),
-                                    fieldWithPath("defenseSkill.defenseType").description("수비 > 타입"),
-                                    fieldWithPath("defenseSkill.sinType").description("수비 > 죄악타입"),
-                                    fieldWithPath("defenseSkill.skillPower").description("수비 > 기본위력"),
-                                    fieldWithPath("defenseSkill.coinPower").description("수비 > 코인위력"),
-                                    fieldWithPath("defenseSkill.skillEffect.effect").description("수비 > 스킬효과 > 효과"),
-                                    fieldWithPath("defenseSkill.skillEffect.onHitEffects").description("수비 > 스킬효과 > 적중시효과"),
+                                    fieldWithPath("defenseSkills[0].name").description("수비 > 이름"),
+                                    fieldWithPath("defenseSkills[0].level").description("수비 > 수비레벨"),
+                                    fieldWithPath("defenseSkills[0].defenseType").description("수비 > 타입"),
+                                    fieldWithPath("defenseSkills[0].sinType").description("수비 > 죄악타입"),
+                                    fieldWithPath("defenseSkills[0].skillPower").description("수비 > 기본위력"),
+                                    fieldWithPath("defenseSkills[0].coinPower").description("수비 > 코인위력"),
+                                    fieldWithPath("defenseSkills[0].skillEffect.effect").description("수비 > 스킬효과 > 효과"),
+                                    fieldWithPath("defenseSkills[0].skillEffect.onHitEffects").description("수비 > 스킬효과 > 적중시효과"),
 
                                     fieldWithPath("passiveSkills[0].name").description("패시브 > 이름"),
                                     fieldWithPath("passiveSkills[0].sinType").description("패시브 > 죄악속성").optional(),

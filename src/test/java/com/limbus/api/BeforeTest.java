@@ -246,7 +246,7 @@ public class BeforeTest {
                 .status(status)
                 .resistances(resistances)
                 .offenseSkills(List.of(offenseSkill1, offenseSkill2, offenseSkill3))
-                .defenseSkill(defenseSkill)
+                .defenseSkills(List.of(defenseSkill))
                 .passiveSkills(List.of(passiveSkill1, passiveSkill2, passiveSkill3))
                 .sanity(sanity)
                 .build();
@@ -456,7 +456,7 @@ public class BeforeTest {
                 .status(status)
                 .resistances(resistances)
                 .offenseSkills(List.of(offenseSkill1, offenseSkill2, offenseSkill3))
-                .defenseSkill(defenseSkill)
+                .defenseSkills(List.of(defenseSkill))
                 .passiveSkills(List.of(passiveSkill1, passiveSkill2))
                 .sanity(sanity)
                 .build();

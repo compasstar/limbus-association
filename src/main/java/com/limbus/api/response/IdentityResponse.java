@@ -21,7 +21,7 @@ public class IdentityResponse {
     private Status status;
     private Resistances resistances;
     private List<OffenseSkillResponse> offenseSkills = new ArrayList<>();
-    private DefenseSkillResponse defenseSkill;
+    private List<DefenseSkillResponse> defenseSkills = new ArrayList<>();
     private List<PassiveSkillResponse> passiveSkills = new ArrayList<>();
     private Sanity sanity;
 
@@ -33,7 +33,9 @@ public class IdentityResponse {
         if (identity.getOffenseSkills() != null) {
             offenseSkills = identity.getOffenseSkills().stream().map(OffenseSkillResponse::new).collect(Collectors.toList());
         }
-        defenseSkill = new DefenseSkillResponse(identity.getDefenseSkill());
+        if (identity.getDefenseSkills() != null) {
+            defenseSkills = identity.getDefenseSkills().stream().map(DefenseSkillResponse::new).collect(Collectors.toList());
+        }
         if (identity.getPassiveSkills() != null) {
             passiveSkills = identity.getPassiveSkills().stream().map(PassiveSkillResponse::new).collect(Collectors.toList());
         }

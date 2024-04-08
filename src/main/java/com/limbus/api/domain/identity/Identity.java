@@ -42,8 +42,8 @@ public class Identity {
     @OneToMany(mappedBy = "identity")
     private List<OffenseSkill> offenseSkills = new ArrayList<>();
 
-    @OneToOne(mappedBy = "identity")
-    private DefenseSkill defenseSkill;
+    @OneToMany(mappedBy = "identity")
+    private List<DefenseSkill> defenseSkills = new ArrayList<>();
 
     @OneToMany(mappedBy = "identity")
     private List<PassiveSkill> passiveSkills = new ArrayList<>();
@@ -53,7 +53,7 @@ public class Identity {
 
 
     @Builder
-    public Identity(Sinner sinner, String name, Integer rarity, Status status, Resistances resistances, List<OffenseSkill> offenseSkills, DefenseSkill defenseSkill, List<PassiveSkill> passiveSkills, Sanity sanity) {
+    public Identity(Sinner sinner, String name, Integer rarity, Status status, Resistances resistances, List<OffenseSkill> offenseSkills, List<DefenseSkill> defenseSkills, List<PassiveSkill> passiveSkills, Sanity sanity) {
         this.sinner = sinner;
         this.name = name;
         this.rarity = rarity;
@@ -62,7 +62,9 @@ public class Identity {
         for (OffenseSkill offenseSkill : offenseSkills) {
             addOffenseSkill(offenseSkill);
         }
-        addDefenseSkill(defenseSkill);
+        for (DefenseSkill defenseSkill : defenseSkills) {
+            addDefenseSkill(defenseSkill);
+        }
         for (PassiveSkill passiveSkill : passiveSkills) {
             addPassiveSkill(passiveSkill);
         }
@@ -75,7 +77,7 @@ public class Identity {
     }
 
     private void addDefenseSkill(DefenseSkill defenseSkill) {
-        this.defenseSkill = defenseSkill;
+        defenseSkills.add(defenseSkill);
         defenseSkill.setIdentity(this);
     }
 
