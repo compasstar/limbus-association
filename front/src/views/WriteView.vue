@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import {ref} from "vue";
-import axios from 'axios';
+    import {ref} from "vue";
+    import axios from 'axios';
 
-const title = ref("")
-const content = ref("")
+    const title = ref("")
+    const content = ref("")
 
-const write = function() {
-    axios.get("http://google.com")
-}
+    const write = function() {
+        axios.post("/api/posts", {
+            title: title.value,
+            content: content.value
+        })
+    }
 </script>
 
 <template>
