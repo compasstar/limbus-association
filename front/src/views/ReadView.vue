@@ -6,34 +6,82 @@ import {useRouter} from "vue-router"
 const router = useRouter();
 
 const props = defineProps({
-    postId: {
-        type: [Number, String],
-        require: true,
-    },
+  postId: {
+    type: [Number, String],
+    require: true,
+  },
 });
 
 const post = ref({
-    id: 0,
-    title: "",
-    content: "",
+  id: 0,
+  title: "",
+  content: "",
 });
 
 const moveToEdit = () => {
-    router.push({name : "edit", params : {postId : props.postId}});
+  router.push({name: "edit", params: {postId: props.postId}});
 };
 
 onMounted(() => {
-    axios.get(`/api/posts/${props.postId}`)
-    .then((response) => {
+  axios.get(`/api/posts/${props.postId}`)
+      .then((response) => {
         post.value = response.data;
-    });
+      });
 });
 </script>
 
 
 <template>
-    <h2>{{post.title}}</h2>
-    <div>{{post.content}}</div>
+  <el-row>
+    <el-col>
+      <h2 class="title">{{ post.title }}</h2>
+      <div class="sub d-flex">
+        <div class="category">개발</div>
+        <div class="regDate">2022-06-01 23:59:59</div>
+      </div>
+    </el-col>
+  </el-row>
 
-    <el-button type="warning" @click="moveToEdit()">수정하기</el-button>
+  <el-row class="mt-3">
+    <el-col>
+      <div class="content">{{ post.content }}</div>
+    </el-col>
+  </el-row>
+
+  <el-row class="mt-3">
+    <el-col>
+      <div class="d-flex justify-content-end">
+        <el-button type="warning" @click="moveToEdit()">수정하기</el-button>
+      </div>
+    </el-col>
+  </el-row>
 </template>
+
+<style scoped lang="scss">
+
+.title {
+  font-size: 1.6rem;
+  color: #383838;
+  font-weight: 600;
+  margin: 0;
+}
+
+.sub {
+  margin-top: 10px;
+  font-size: 0.78rem;
+
+  .regDate {
+    margin-left: 10px;
+    color: #6b6b6b;
+  }
+}
+
+.content {
+  font-size: 0.85rem;
+  margin-top: 12px;
+  color: #7e7e7e;
+  white-space: break-spaces;
+  line-height: 1.5;
+}
+
+</style>

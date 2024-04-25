@@ -1,5 +1,3 @@
-// import './assets/main.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
@@ -8,8 +6,8 @@ import router from './router'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-
 import 'bootstrap/dist/css/bootstrap-utilities.css'
+import "normalize.css"
 
 const app = createApp(App)
 

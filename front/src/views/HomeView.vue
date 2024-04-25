@@ -8,37 +8,72 @@ const router = useRouter();
 
 axios.get("/api/posts?page=1&size=5")
     .then((response) => {
-        response.data.forEach((r: any) => {
-            posts.value.push(r);
+      response.data.forEach((r: any) => {
+        posts.value.push(r);
+      });
     });
-});
-
-
 </script>
 
 <template>
-    <ul>
-        <li v-for="post in posts" :key = "post.id">
-            <div>
-                <router-link :to="{name: 'read', params: {postId: post.id}}">
-                    {{post.title}}
-                </router-link>
-            </div>
-            <div>
-                {{post.content}}
-            </div>
-        </li>
-    </ul>
+  <ul>
+    <li v-for="post in posts" :key="post.id">
+      <div class="title">
+        <router-link :to="{name: 'read', params: {postId: post.id}}">
+          {{ post.title }}
+        </router-link>
+      </div>
+      <div class="content">
+        {{ post.content }}
+      </div>
+
+      <div class="sub d-flex">
+        <div class="category">개발</div>
+        <div class="regDate">2022-06-01</div>
+      </div>
+    </li>
+  </ul>
 </template>
 
 
-<style scoped>
-li {
-    margin-bottom: 1rem;
-}
+<style scoped lang="scss">
+ul {
+  list-style: none;
+  padding: 0;
 
-li:last-child {
+  li {
+    margin-bottom: 2rem;
+
+    .title {
+      a {
+        font-size: 1.1rem;
+        color: #383838;
+        text-decoration: none;
+      }
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .content {
+      font-size: 0.85rem;
+      margin-top: 8px;
+      color: #6b6b6b;
+    }
+
+    .sub {
+      margin-top: 9px;
+      font-size: 0.78rem;
+
+      .regDate {
+        margin-left: 10px;
+        color: #6b6b6b;
+      }
+    }
+  }
+
+  &:last-child {
     margin-bottom: 0;
+  }
 }
 
 </style>
