@@ -1,6 +1,5 @@
 package com.limbus.api.controller;
 
-import com.limbus.api.exception.InvalidRequest;
 import com.limbus.api.request.PostCreate;
 import com.limbus.api.request.PostEdit;
 import com.limbus.api.request.PostSearch;

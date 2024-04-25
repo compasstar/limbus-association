@@ -7,6 +7,7 @@ import com.limbus.api.request.PostCreate;
 import com.limbus.api.request.PostEdit;
 import com.limbus.api.request.PostSearch;
 import com.limbus.api.response.PostResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,7 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public void edit(Long id, PostEdit postEdit) {
         Post post = postRepository.findById(id)
                 .orElseThrow(PostNotFound::new);
