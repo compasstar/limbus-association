@@ -30,8 +30,11 @@ public class IdentityResponse {
         rarity = identity.getRarity();
         status = identity.getStatus();
         resistances = identity.getResistances();
+        System.out.println("identity.getOffenseSkills().get(0).getName() = " + identity.getOffenseSkills().get(0).getName());
         if (identity.getOffenseSkills() != null) {
             offenseSkills = identity.getOffenseSkills().stream().map(OffenseSkillResponse::new).collect(Collectors.toList());
+//            System.out.println("getOffenseSkills = " + identity.getOffenseSkills().size());
+//            System.out.println("offenseSkills = " + offenseSkills.size());
         }
         if (identity.getDefenseSkills() != null) {
             defenseSkills = identity.getDefenseSkills().stream().map(DefenseSkillResponse::new).collect(Collectors.toList());
