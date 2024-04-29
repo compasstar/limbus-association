@@ -83,7 +83,7 @@ public class BeforeTest {
          */
         OffenseSkill offenseSkill1 = OffenseSkill.builder()
                 .slot(1)
-                .name("내 주위에 서리!")
+                .name("내 주위에 서라!")
                 .level(43)
                 .offenseType(OffenseType.PIERCE)
                 .sinType(SinType.ENVY)

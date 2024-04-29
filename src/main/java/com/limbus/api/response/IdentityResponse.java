@@ -4,7 +4,6 @@ import com.limbus.api.domain.identity.Identity;
 import com.limbus.api.domain.identity.Resistances;
 import com.limbus.api.domain.identity.Sanity;
 import com.limbus.api.domain.identity.Status;
-import com.limbus.api.domain.skill.OffenseSkill;
 import com.limbus.api.domain.type.Sinner;
 import lombok.Getter;
 

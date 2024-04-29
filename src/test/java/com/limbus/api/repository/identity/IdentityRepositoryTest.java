@@ -1,9 +1,8 @@
-package com.limbus.api.repository;
+package com.limbus.api.repository.identity;
 
 import com.limbus.api.BeforeTest;
 import com.limbus.api.domain.identity.Identity;
 import com.limbus.api.domain.type.Sinner;
-import com.limbus.api.repository.identity.IdentityRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,8 +31,6 @@ class IdentityRepositoryTest {
 
     @Test
     void findById() {
-        //given
-
         //when
         Long id = identityRepository.findByName("피쿼드호 선장").get(0).getId();
         Identity identity = identityRepository.findById(id)
@@ -66,10 +63,6 @@ class IdentityRepositoryTest {
 
     @Test
     void findBySinnerTest() {
-
-        //given
-        //save ISHMAEL2, Not YI_SANG
-
         //when
         List<Identity> identities_ISHMAEL = identityRepository.findBySinner(Sinner.ISHMAEL);
         List<Identity> identities_YI_SANG = identityRepository.findBySinner(Sinner.YI_SANG);
