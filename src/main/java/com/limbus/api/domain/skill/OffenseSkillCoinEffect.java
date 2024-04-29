@@ -1,0 +1,37 @@
+package com.limbus.api.domain.skill;
+
+import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@Entity
+@NoArgsConstructor
+public class OffenseSkillCoinEffect {
+
+    @Id @GeneratedValue
+    @Column(name = "offense_skill_coin_effect_id")
+    private Long id;
+
+    private Integer coin;
+
+    @Lob
+    private String effect;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "offense_skill_id")
+    private OffenseSkill offenseSkill;
+
+    @Builder
+    public OffenseSkillCoinEffect(Integer coin, String effect, OffenseSkill offenseSkill) {
+        this.coin = coin;
+        this.effect = effect;
+        setOffenseSkill(offenseSkill);
+    }
+
+    private void setOffenseSkill(OffenseSkill offenseSkill) {
+        this.offenseSkill = offenseSkill;
+        offenseSkill.getOffenseSkillCoinEffects().add(this);
+    }
+}

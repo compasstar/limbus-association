@@ -39,19 +39,18 @@ class IdentityControllerTest {
     }
 
     @Test
-    @DisplayName("/identity/{identityId} id에 해당하는 인격 1개 조회")
+    @DisplayName("/identities/{identityId} id에 해당하는 인격 1개 조회")
     void getIdentityTest() throws Exception {
         //given
         //@BeforeEach saveIdentities
         Identity identity = identityRepository.findByName("피쿼드호 선장").get(0);
 
         //expected
-        mockMvc.perform(get("/identity/{identityId}", identity.getId()))
+        mockMvc.perform(get("/identities/{identityId}", identity.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("피쿼드호 선장"))
                 .andExpect(jsonPath("$.status.hp").value(identity.getStatus().getHp()))
                 .andExpect(jsonPath("$.defenseSkills[0].name").value("공포를 날려주지"))
-                .andExpect(jsonPath("$.offenseSkills[0].skillEffect.onHitEffects[0].coin").value(identity.getOffenseSkills().get(0).getSkillEffect().getOnHitEffects().get(0).getCoin()))
                 .andDo(print());
     }
 }

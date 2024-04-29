@@ -1,13 +1,14 @@
 package com.limbus.api.domain.skill;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.limbus.api.domain.identity.Identity;
 import com.limbus.api.domain.type.PassiveType;
 import com.limbus.api.domain.type.SinType;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Getter
 @Entity
 public class PassiveSkill {
@@ -32,31 +33,28 @@ public class PassiveSkill {
     
     //몇 개 공명, 몇 개 보유
     private Integer amount;
-    
-    //효과
-    @OneToOne(mappedBy = "passiveSkill")
-    private SkillEffect skillEffect;
+
+    @Lob
+    private String effect;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "identity_id")
     private Identity identity;
 
-    public void setIdentity(Identity identity) {
-        this.identity = identity;
-    }
 
     @Builder
-    public PassiveSkill(Boolean support, String name, SinType sinType, PassiveType passiveType, Integer amount, SkillEffect skillEffect) {
+    public PassiveSkill(Boolean support, String name, SinType sinType, PassiveType passiveType, Integer amount, String effect, Identity identity) {
         this.support = support;
         this.name = name;
         this.sinType = sinType;
         this.passiveType = passiveType;
         this.amount = amount;
-        addSkillEffect(skillEffect);
+        this.effect = effect;
+        setIdentity(identity);
     }
 
-    private void addSkillEffect(SkillEffect skillEffect) {
-        this.skillEffect = skillEffect;
-        skillEffect.setPassiveSkill(this);
+    public void setIdentity(Identity identity) {
+        this.identity = identity;
+        identity.getPassiveSkills().add(this);
     }
 }

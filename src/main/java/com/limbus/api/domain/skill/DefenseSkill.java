@@ -6,9 +6,11 @@ import com.limbus.api.domain.type.SinType;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class DefenseSkill {
 
     @Id @GeneratedValue
@@ -35,32 +37,28 @@ public class DefenseSkill {
     //코인 위력
     private Integer coinPower;
 
-    //코인별 효과
-    @OneToOne(mappedBy = "defenseSkill")
-    private SkillEffect skillEffect;
+    @Lob
+    private String effect;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "identity_id")
     private Identity identity;
 
-    public void setIdentity(Identity identity) {
-        this.identity = identity;
-    }
-
 
     @Builder
-    public DefenseSkill(String name, Integer level, DefenseType defenseType, SinType sinType, Integer skillPower, Integer coinPower, SkillEffect skillEffect) {
+    public DefenseSkill(String name, Integer level, DefenseType defenseType, SinType sinType, Integer skillPower, Integer coinPower, String effect, Identity identity) {
         this.name = name;
         this.level = level;
         this.defenseType = defenseType;
         this.sinType = sinType;
         this.skillPower = skillPower;
         this.coinPower = coinPower;
-        addSkillEffect(skillEffect);
+        this.effect = effect;
+        setIdentity(identity);
     }
 
-    private void addSkillEffect(SkillEffect skillEffect) {
-        this.skillEffect = skillEffect;
-        skillEffect.setDefenseSkill(this);
+    public void setIdentity(Identity identity) {
+        this.identity = identity;
+        identity.getDefenseSkills().add(this);
     }
 }

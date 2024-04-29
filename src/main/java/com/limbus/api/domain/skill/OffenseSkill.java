@@ -1,16 +1,23 @@
 package com.limbus.api.domain.skill;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.limbus.api.domain.identity.Identity;
 import com.limbus.api.domain.type.OffenseType;
 import com.limbus.api.domain.type.SinType;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Getter
 @Entity
+@NoArgsConstructor
 public class OffenseSkill {
 
     @Id @GeneratedValue
@@ -49,22 +56,20 @@ public class OffenseSkill {
     //가중치
     private Integer weight;
 
-    //코인별 효과
-    @OneToOne(mappedBy = "offenseSkill")
-    private SkillEffect skillEffect;
-
+    @Lob
+    private String effect;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "identity_id")
     private Identity identity;
 
-    public void setIdentity(Identity identity) {
-        this.identity = identity;
-    }
-
+    @OneToMany(mappedBy = "offenseSkill")
+    private List<OffenseSkillCoinEffect> offenseSkillCoinEffects = new ArrayList<>();
 
     @Builder
-    public OffenseSkill(Integer slot, String name, Integer level, OffenseType offenseType, SinType sinType, Integer amount, Integer skillPower, Integer coinPower, Integer coinNumber, Integer weight, SkillEffect skillEffect) {
+    public OffenseSkill(Integer slot, String name, Integer level, OffenseType offenseType, SinType sinType,
+                        Integer amount, Integer skillPower, Integer coinPower, Integer coinNumber, Integer weight,
+                        String effect, Identity identity) {
         this.slot = slot;
         this.name = name;
         this.level = level;
@@ -75,11 +80,12 @@ public class OffenseSkill {
         this.coinPower = coinPower;
         this.coinNumber = coinNumber;
         this.weight = weight;
-        addSkillEffect(skillEffect);
+        this.effect = effect;
+        setIdentity(identity);
     }
 
-    private void addSkillEffect(SkillEffect skillEffect) {
-        this.skillEffect = skillEffect;
-        skillEffect.setOffenseSkill(this);
+    public void setIdentity(Identity identity) {
+        this.identity = identity;
+        identity.getOffenseSkills().add(this);
     }
 }
