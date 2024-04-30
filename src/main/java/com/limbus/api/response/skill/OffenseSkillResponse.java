@@ -15,8 +15,8 @@ public class OffenseSkillResponse {
     private Integer slot;
     private String name;
     private Integer level;
-    private OffenseType offenseType;
-    private SinType sinType;
+    private String offenseType;
+    private String sinType;
     private Integer amount;
     private Integer skillPower;
     private Integer coinPower;
@@ -29,8 +29,8 @@ public class OffenseSkillResponse {
         slot = offenseSkill.getSlot();
         name = offenseSkill.getName();
         level = offenseSkill.getLevel();
-        offenseType = offenseSkill.getOffenseType();
-        sinType = offenseSkill.getSinType();
+        offenseType = offenseSkill.getOffenseType() != null ? offenseSkill.getOffenseType().getName() : null;
+        sinType = offenseSkill.getSinType() != null ? offenseSkill.getSinType().getName() : null;
         amount = offenseSkill.getAmount();
         skillPower = offenseSkill.getSkillPower();
         coinPower = offenseSkill.getCoinPower();

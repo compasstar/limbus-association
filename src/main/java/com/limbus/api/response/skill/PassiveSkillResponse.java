@@ -9,15 +9,15 @@ import lombok.Getter;
 public class PassiveSkillResponse {
 
     private String name;
-    private SinType sinType;
-    private PassiveType passiveType;
+    private String sinType;
+    private String passiveType;
     private Integer amount;
     private String effect;
 
     public PassiveSkillResponse(PassiveSkill passiveSkill) {
         name = passiveSkill.getName();
-        sinType = passiveSkill.getSinType();
-        passiveType = passiveSkill.getPassiveType();
+        sinType = (passiveSkill.getSinType() != null) ? passiveSkill.getSinType().getName() : null;
+        passiveType = (passiveSkill.getPassiveType() != null) ? passiveSkill.getPassiveType().getName() : null;
         amount = passiveSkill.getAmount();
         effect = passiveSkill.getEffect();
     }

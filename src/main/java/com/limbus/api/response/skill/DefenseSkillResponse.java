@@ -10,8 +10,8 @@ public class DefenseSkillResponse {
 
     private String name;
     private Integer level;
-    private DefenseType defenseType;
-    private SinType sinType;
+    private String defenseType;
+    private String sinType;
     private Integer skillPower;
     private Integer coinPower;
     private String effect;
@@ -19,8 +19,8 @@ public class DefenseSkillResponse {
     public DefenseSkillResponse(DefenseSkill defenseSkill) {
         name = defenseSkill.getName();
         level = defenseSkill.getLevel();
-        defenseType = defenseSkill.getDefenseType();
-        sinType = defenseSkill.getSinType();
+        defenseType = defenseSkill.getDefenseType() != null ? defenseSkill.getDefenseType().getName() : null;
+        sinType = defenseSkill.getSinType() != null ? defenseSkill.getSinType().getName() : null;
         skillPower = defenseSkill.getSkillPower();
         coinPower = defenseSkill.getCoinPower();
         effect = defenseSkill.getEffect();

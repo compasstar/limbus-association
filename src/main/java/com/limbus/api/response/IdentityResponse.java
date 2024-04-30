@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 public class IdentityResponse {
 
-    private Sinner sinner;
+    private String sinner;
     private String name;
     private Integer rarity;
     private Status status;
@@ -27,7 +27,7 @@ public class IdentityResponse {
     List<PassiveSkillResponse> passiveSkills = new ArrayList<>();
 
     public IdentityResponse(Identity identity) {
-        sinner = identity.getSinner();
+        sinner = identity.getSinner() != null ? identity.getSinner().getName() : null;
         name = identity.getName();
         rarity = identity.getRarity();
         status = identity.getStatus();
