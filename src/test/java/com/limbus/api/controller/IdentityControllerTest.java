@@ -49,7 +49,11 @@ class IdentityControllerTest {
         mockMvc.perform(get("/identities/{identityId}", identity.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("피쿼드호 선장"))
-                .andExpect(jsonPath("$.status.hp").value(identity.getStatus().getHp()))
+                .andExpect(jsonPath("$.status.hp").value(160))
+                .andExpect(jsonPath("$.offenseSkills[0].name").value("내 주위에 서라!"))
+                .andExpect(jsonPath("$.offenseSkills[0].offenseSkillCoinEffects[0].effect").value("[적중시] 출혈 2 부여"))
+                .andExpect(jsonPath("$.defenseSkills[0].name").value("공포를 날려주지"))
+                .andExpect(jsonPath("$.passiveSkills[0].name").value("피쿼드호의 선장"))
                 .andDo(print());
     }
 }
