@@ -63,7 +63,7 @@ class PassiveSkillRepositoryTest {
         assertEquals(SinType.PRIDE, passiveSkill3.getSinType());
         assertEquals(PassiveType.RESONANCE, passiveSkill3.getPassiveType());
         assertEquals(3, passiveSkill3.getAmount());
-        assertEquals("정신력이 가장 높은 아군 1명이 자신의 공격 종료 시 대상이 사망했으면, 호흡 2, 호흡 회수 2 얻음(턴 당 2회)", passiveSkill3.getEffect());
+        assertEquals("정신력이 가장 높은 아군 1명이 자신의 공격 종료 시 대상이 사망했으면, 호흡 2, 호흡 횟수 2 얻음(턴 당 2회)", passiveSkill3.getEffect());
     }
 
     @Test
