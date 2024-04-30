@@ -10,6 +10,7 @@ import com.limbus.api.domain.type.*;
 import com.limbus.api.repository.identity.IdentityRepository;
 import com.limbus.api.repository.skill.*;
 import com.limbus.api.response.IdentityResponse;
+import com.limbus.api.response.skill.OffenseSkillResponse;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -42,8 +43,6 @@ class IdentityServiceTest {
     @Test
     @DisplayName("인격 1개 조회")
     void getIdentityTest() {
-        //given
-
         //when
         Identity identity = identityRepository.findByName("피쿼드호 선장").get(0);
         IdentityResponse identityResponse = identityService.getIdentity(identity.getId());
@@ -51,6 +50,13 @@ class IdentityServiceTest {
         //then
         assertNotNull(identityResponse);
         assertEquals(160, identityResponse.getStatus().getHp());
+        assertEquals("끝까지 추적한다!", identityResponse.getOffenseSkills().get(1).getName());
+
+        List<OffenseSkillResponse> offenseSkillResponses = identityResponse.getOffenseSkills();
+        assertEquals("[적중시] 화상 1 부여", offenseSkillResponses.get(1).getOffenseSkillCoinEffects().get(1).getEffect());
+
+        assertEquals("공포를 날려주지", identityResponse.getDefenseSkills().get(0).getName());
+        assertEquals("사냥 시간", identityResponse.getPassiveSkills().get(1).getName());
     }
 
     @Test
