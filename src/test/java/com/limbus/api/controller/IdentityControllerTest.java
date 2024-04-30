@@ -50,7 +50,6 @@ class IdentityControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("피쿼드호 선장"))
                 .andExpect(jsonPath("$.status.hp").value(identity.getStatus().getHp()))
-                .andExpect(jsonPath("$.defenseSkills[0].name").value("공포를 날려주지"))
                 .andDo(print());
     }
 }

@@ -43,7 +43,6 @@ class IdentityServiceTest {
     @DisplayName("인격 1개 조회")
     void getIdentityTest() {
         //given
-        //BeforeEach -> save_피쿼드호_선장, R사 제 4무리 순록팀
 
         //when
         Identity identity = identityRepository.findByName("피쿼드호 선장").get(0);
