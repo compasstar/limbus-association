@@ -1,9 +1,13 @@
 package com.limbus.api.response.skill;
 
 import com.limbus.api.domain.skill.OffenseSkill;
+import com.limbus.api.domain.skill.OffenseSkillCoinEffect;
 import com.limbus.api.domain.type.OffenseType;
 import com.limbus.api.domain.type.SinType;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class OffenseSkillResponse {
@@ -19,6 +23,7 @@ public class OffenseSkillResponse {
     private Integer coinNumber;
     private Integer weight;
     private String effect;
+    private List<OffenseSkillCoinEffectResponse> offenseSkillCoinEffects = new ArrayList<>();
 
     public OffenseSkillResponse(OffenseSkill offenseSkill) {
         slot = offenseSkill.getSlot();
@@ -32,6 +37,9 @@ public class OffenseSkillResponse {
         coinNumber = offenseSkill.getCoinNumber();
         weight = offenseSkill.getWeight();
         effect = offenseSkill.getEffect();
+        offenseSkill.getOffenseSkillCoinEffects().forEach(
+                offenseSkillCoinEffect -> offenseSkillCoinEffects.add(new OffenseSkillCoinEffectResponse(offenseSkillCoinEffect))
+        );
     }
 
 }
