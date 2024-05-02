@@ -2,7 +2,6 @@ package com.limbus.api.repository.skill;
 
 import com.limbus.api.BeforeTest;
 import com.limbus.api.domain.skill.DefenseSkill;
-import com.limbus.api.domain.skill.OffenseSkill;
 import com.limbus.api.domain.type.SinType;
 import com.limbus.api.repository.identity.IdentityRepository;
 import jakarta.transaction.Transactional;
@@ -14,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Transactional
 @SpringBootTest
@@ -49,6 +48,7 @@ class DefenseSkillRepositoryTest {
         assertEquals(SinType.PRIDE, defenseSkill.getSinType());
         assertEquals(10, defenseSkill.getSkillPower());
         assertEquals(4, defenseSkill.getCoinPower());
+        assertEquals(1, defenseSkill.getCoinNumber());
         assertEquals("[사용시] 조작 패널에서 자신의 양 옆에 위치한 아군의 정신력 5 회복", defenseSkill.getEffect());
     }
 

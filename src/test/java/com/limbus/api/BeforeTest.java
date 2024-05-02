@@ -184,6 +184,7 @@ public class BeforeTest {
                 .sinType(SinType.PRIDE)
                 .skillPower(10)
                 .coinPower(4)
+                .coinNumber(1)
                 .effect("[사용시] 조작 패널에서 자신의 양 옆에 위치한 아군의 정신력 5 회복")
                 .identity(identity)
                 .build();
@@ -378,6 +379,7 @@ public class BeforeTest {
                 .sinType(SinType.GLOOM)
                 .skillPower(4)
                 .coinPower(10)
+                .coinNumber(1)
                 .effect("[회피 성공시] 자신의 충전 횟수 1 증가")
                 .identity(identity)
                 .build();
