@@ -7,5 +7,5 @@ import java.util.List;
 public interface IdentityRepositoryCustom {
 
 
-    List<Identity> findByName(String name);
+    List<Identity> findByPartName(String name);
 }

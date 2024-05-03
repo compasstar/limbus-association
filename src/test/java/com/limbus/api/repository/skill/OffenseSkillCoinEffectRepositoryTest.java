@@ -41,7 +41,7 @@ class OffenseSkillCoinEffectRepositoryTest {
     void findByOffenseSkillId() {
 
         //when
-        Long identityId = identityRepository.findByName("피쿼드호 선장").get(0).getId();
+        Long identityId = identityRepository.findByEnglishName("The_Pequod_Captain_Ishmael").orElseThrow(IllegalArgumentException::new).getId();
         List<OffenseSkill> offenseSkills = offenseSkillRepository.findByIdentityId(identityId);
 
         List<OffenseSkillCoinEffect> offenseSkill1CoinEffects = offenseSkillCoinEffectRepository.findByOffenseSkillId(offenseSkills.get(0).getId());

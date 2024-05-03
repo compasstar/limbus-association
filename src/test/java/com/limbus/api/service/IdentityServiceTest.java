@@ -2,13 +2,7 @@ package com.limbus.api.service;
 
 import com.limbus.api.BeforeTest;
 import com.limbus.api.domain.identity.Identity;
-import com.limbus.api.domain.identity.Resistances;
-import com.limbus.api.domain.identity.Sanity;
-import com.limbus.api.domain.identity.Status;
-import com.limbus.api.domain.skill.*;
-import com.limbus.api.domain.type.*;
 import com.limbus.api.repository.identity.IdentityRepository;
-import com.limbus.api.repository.skill.*;
 import com.limbus.api.response.IdentityResponse;
 import com.limbus.api.response.skill.OffenseSkillResponse;
 import jakarta.transaction.Transactional;
@@ -42,10 +36,10 @@ class IdentityServiceTest {
 
     @Test
     @DisplayName("인격 1개 조회")
-    void getIdentityTest() {
+    void getIdentityByEnglishName() {
         //when
-        Identity identity = identityRepository.findByName("피쿼드호 선장").get(0);
-        IdentityResponse identityResponse = identityService.getIdentity(identity.getId());
+        Identity identity = identityRepository.findByEnglishName("The_Pequod_Captain_Ishmael").orElseThrow(IllegalArgumentException::new);
+        IdentityResponse identityResponse = identityService.getIdentityById(identity.getId());
 
         //then
         assertNotNull(identityResponse);
@@ -62,7 +56,7 @@ class IdentityServiceTest {
     @Test
     @DisplayName("없는 인격 조회 -> throws IllegalArgumentException")
     void getNullIdentityTest() {
-        assertThrows(IllegalArgumentException.class, () -> identityService.getIdentity(9999L));
+        assertThrows(IllegalArgumentException.class, () -> identityService.getIdentityById(9999L));
     }
 
 }

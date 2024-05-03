@@ -31,7 +31,7 @@ const router = createRouter({
       props: true
     },
     {
-      path: '/identities/:identityId',
+      path: '/identities/:englishName',
       name: 'identity',
       component: IdentityView,
       props: true

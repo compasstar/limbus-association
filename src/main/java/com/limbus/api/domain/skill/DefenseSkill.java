@@ -40,6 +40,9 @@ public class DefenseSkill {
     //코인개수
     private Integer coinNumber;
 
+    //가중치
+    private Integer weight;
+
     @Lob
     private String effect;
 
@@ -49,7 +52,7 @@ public class DefenseSkill {
 
 
     @Builder
-    public DefenseSkill(String name, Integer level, DefenseType defenseType, SinType sinType, Integer skillPower, Integer coinPower, Integer coinNumber, String effect, Identity identity) {
+    public DefenseSkill(String name, Integer level, DefenseType defenseType, SinType sinType, Integer skillPower, Integer coinPower, Integer coinNumber, String effect, Identity identity, Integer weight) {
         this.name = name;
         this.level = level;
         this.defenseType = defenseType;
@@ -58,6 +61,7 @@ public class DefenseSkill {
         this.coinPower = coinPower;
         this.coinNumber = coinNumber;
         this.effect = effect;
+        this.weight = weight;
         setIdentity(identity);
     }
 

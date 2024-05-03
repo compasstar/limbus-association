@@ -39,14 +39,14 @@ class IdentityControllerTest {
     }
 
     @Test
-    @DisplayName("/identities/{identityId} id에 해당하는 인격 1개 조회")
+    @DisplayName("/identities/{englishName} 이름에 해당하는 인격 1개 조회")
     void getIdentityTest() throws Exception {
         //given
         //@BeforeEach saveIdentities
-        Identity identity = identityRepository.findByName("피쿼드호 선장").get(0);
+        Identity identity = identityRepository.findByEnglishName("The_Pequod_Captain_Ishmael").orElseThrow(IllegalArgumentException::new);
 
         //expected
-        mockMvc.perform(get("/identities/{identityId}", identity.getId()))
+        mockMvc.perform(get("/identities/{englishName}", identity.getEnglishName()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("피쿼드호 선장"))
                 .andExpect(jsonPath("$.status.hp").value(160))

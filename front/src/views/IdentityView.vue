@@ -1,13 +1,13 @@
 <script setup lang="ts">
 
-import {defineProps, ref} from "vue";
+import {computed, defineProps, ref} from "vue";
 import axios from "axios";
 
 const props = defineProps({
-  identityId: {
-    type: [Number, String],
+  englishName: {
+    type: [String],
     require: true,
-  },
+  }
 });
 
 const initialIdentity: Identity = {
@@ -61,9 +61,11 @@ const initialIdentity: Identity = {
     skillPower: 50,
     coinPower: 20,
     coinNumber: 1,
-    effect: "Reduces incoming damage by 30%."
+    effect: "Reduces incoming damage by 30%.",
+    weight: 1,
   }],
   passiveSkills: [{
+    support: false,
     name: "Passive Skill",
     sinType: "Greed",
     passiveType: "Buff",
@@ -85,6 +87,7 @@ interface Identity {
   passiveSkills: PassiveSkill[];
 }
 interface PassiveSkill {
+  support: boolean;
   name: string;
   sinType?: string;
   passiveType?: string;
@@ -100,6 +103,7 @@ interface DefenseSkill {
   coinPower: number;
   coinNumber: number;
   effect: string;
+  weight: number;
 }
 interface OffenseSkill {
   slot: number;
@@ -140,16 +144,33 @@ const re = (text:String) => {
   return text.replaceAll("\\n", "</br>");
 }
 
-axios.get(`/api/identities/${props.identityId}`)
+// axios.get(`/api/identities/${props.identityId}`)
+//     .then((response) => {
+//       identity.value = response.data;
+//     });
+
+axios.get(`/api/identities/${props.englishName}`)
     .then((response) => {
       identity.value = response.data;
+      console.log(identity.value);
     });
+
+const supportPassives = computed(() => {
+  return identity.value.passiveSkills.filter(passiveSkill => passiveSkill.support);
+});
+const nonSupportPassives = computed(() => {
+  return identity.value.passiveSkills.filter(passiveSkill => !passiveSkill.support);
+});
+
+
+
+
 </script>
 
 
 <template>
   <div class="name">
-    <h1>{{identity.name}} (희귀도: {{identity.rarity}})</h1>
+    <h1>[{{identity.sinner}}] {{identity.name}} (희귀도: {{identity.rarity}})</h1>
   </div>
 
   <div class="status-and-resistances">
@@ -180,7 +201,7 @@ axios.get(`/api/identities/${props.identityId}`)
       <div class="content">
         <div>{{offenseSkill.name}} x{{offenseSkill.amount}} ({{offenseSkill.offenseType}})</div>
         <div>위력 {{offenseSkill.skillPower}} + {{offenseSkill.coinPower}} x {{offenseSkill.coinNumber}}(코인개수)</div>
-        <div>공격레벨{{offenseSkill.level}} 가중치 {{offenseSkill.weight}} [{{offenseSkill.sinType}}]</div>
+        <div>공격레벨 {{offenseSkill.level}} 가중치 {{offenseSkill.weight}} [{{offenseSkill.sinType}}]</div>
         <div class="effect mt-2" v-html="re(offenseSkill.effect)"></div>
         <div class="coin-effect" v-for="(offenseSkillCoinEffect) in offenseSkill.offenseSkillCoinEffects">
           <div>- 코인{{offenseSkillCoinEffect.coin}}: {{offenseSkillCoinEffect.effect}}</div>
@@ -193,42 +214,72 @@ axios.get(`/api/identities/${props.identityId}`)
         수비
       </div>
       <div class="content">
-        <div>{{defenseSkill.name}}</div>
+        <div>{{defenseSkill.name}} ({{defenseSkill.defenseType}})</div>
         <div>위력 {{defenseSkill.skillPower}} + {{defenseSkill.coinPower}} x {{defenseSkill.coinNumber}}</div>
-        <ul>
-          <li>수비레벨: {{defenseSkill.level}}</li>
-          <li>타입: {{defenseSkill.defenseType}}</li>
-          <li>타입: {{defenseSkill.sinType}}</li>
-          <li>스킬위력: {{defenseSkill.skillPower}}</li>
-          <li>코인위력: {{defenseSkill.coinPower}}</li>
-          <li>효과: {{defenseSkill.effect}}</li>
-        </ul>
+        <div>수비레벨 {{defenseSkill.level}} 가중치 {{defenseSkill.weight}} [{{defenseSkill.sinType}}]</div>
+        <div class="effect mt-2" v-html="re(defenseSkill.effect)"></div>
       </div>
     </div>
   </div>
 
 
-
-
-  <div class="passiveSkills" v-for="(passiveSkill) in identity.passiveSkills">
-    <h2>패시브스킬</h2>
-    <div class="passiveSkill1">
-      <ul>
-        <li>이름: {{passiveSkill.name}}</li>
-        <li>타입: {{passiveSkill.sinType}}</li>
-        <li>{{passiveSkill.amount}}개 {{passiveSkill.passiveType}}</li>
-        <p>효과: <li v-html="re(passiveSkill.effect)"></li></p>
-      </ul>
+  <h2>패시브</h2>
+  <div class="passiveSkills">
+    <div class="passiveSkill" v-for="(passiveSkill) in nonSupportPassives">
+      <div class="slot">
+        <div>패시브</div>
+      </div>
+      <div class="content">
+        <div>{{passiveSkill.name}}</div>
+        <div v-if="passiveSkill.amount">{{passiveSkill.sinType}} x{{passiveSkill.amount}} {{passiveSkill.passiveType}}</div>
+        <div class="effect" v-html="re(passiveSkill.effect)"></div>
+      </div>
+    </div>
+    <div class="passiveSkill" v-for="(passiveSkill) in supportPassives">
+      <div class="slot">
+        <div>서포트<br>패시브</div>
+      </div>
+      <div class="content">
+        <div>{{passiveSkill.name}}</div>
+        <div v-if="passiveSkill.amount">{{passiveSkill.sinType}} x{{passiveSkill.amount}} {{passiveSkill.passiveType}}</div>
+        <div class="effect" v-html="re(passiveSkill.effect)"></div>
+      </div>
     </div>
   </div>
 
-  <div class="sanity">
-    <ul>
-      <li>패닉: {{identity.sanity.panic}}</li>
-      <p>정신력증가조건<li v-html="re(identity.sanity.factorsIncreasingSanity)"></li></p>
-      <p>정신력감소조건<li v-html="re(identity.sanity.factorsDecreasingSanity)"></li></p>
-    </ul>
+
+  <h2>정신력</h2>
+  <div class="sanity-container">
+    <div class="sanity">
+      <div class="slot">
+        패닉<br>유형
+      </div>
+      <div class="content effect">
+        {{identity.sanity.panic}}
+      </div>
+    </div>
+    <div class="sanity">
+      <div class="slot text-info">
+        정신력<br>증가<br>조건
+      </div>
+      <div class="content effect" v-html="re(identity.sanity.factorsIncreasingSanity)"></div>
+    </div>
+    <div class="sanity">
+      <div class="slot text-danger">
+        정신력<br>감소<br>조건
+      </div>
+      <div class="content effect" v-html="re(identity.sanity.factorsDecreasingSanity)"></div>
+    </div>
   </div>
+
+
+
+  <div class="search">
+    <div class="icons"></div>
+    <div><input type="text" placeholder="수감자 검색"></div>
+    <div class="result"></div>
+  </div>
+
 </template>
 
 
@@ -266,27 +317,37 @@ ul {
     display: flex;
     border-style: solid;
   }
-
-
-  .slot {
-    align-content: center;
-    text-align: center;
-    width: 10%;
-    margin-left: 1rem;
-
-    border-style: solid;
-  }
-  .content {
-    width: 90%;
-    .effect {
-      font-size: 0.8rem;
-    }
-    .coin-effect {
-      font-size: 0.8rem;
-    }
-  }
-
 }
+
+.passiveSkill {
+  display: flex;
+  border-style: solid;
+}
+
+.sanity {
+  display: flex;
+  border-style: solid;
+}
+
+.slot {
+  align-content: center;
+  text-align: center;
+  width: 10%;
+  margin-left: 1rem;
+
+  border-style: solid;
+  border-color: black;
+}
+.content {
+  width: 90%;
+  .effect {
+    font-size: 0.8rem;
+  }
+  .coin-effect {
+    font-size: 0.8rem;
+  }
+}
+
 
 
 

@@ -16,6 +16,7 @@ public class DefenseSkillResponse {
     private Integer coinPower;
     private Integer coinNumber;
     private String effect;
+    private Integer weight;
 
     public DefenseSkillResponse(DefenseSkill defenseSkill) {
         name = defenseSkill.getName();
@@ -26,5 +27,6 @@ public class DefenseSkillResponse {
         coinPower = defenseSkill.getCoinPower();
         coinNumber = defenseSkill.getCoinNumber();
         effect = defenseSkill.getEffect();
+        weight = defenseSkill.getWeight();
     }
 }

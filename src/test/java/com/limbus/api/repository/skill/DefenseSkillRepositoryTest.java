@@ -37,7 +37,7 @@ class DefenseSkillRepositoryTest {
     @DisplayName("findByIdentityId 테스트")
     void findByIdentityIdTest() {
         //when
-        Long identityId = identityRepository.findByName("피쿼드호 선장").get(0).getId();
+        Long identityId = identityRepository.findByEnglishName("The_Pequod_Captain_Ishmael").orElseThrow(IllegalArgumentException::new).getId();
         List<DefenseSkill> defenseSkills = defenseSkillRepository.findByIdentityId(identityId);
         DefenseSkill defenseSkill = defenseSkills.get(0);
 
@@ -49,6 +49,7 @@ class DefenseSkillRepositoryTest {
         assertEquals(10, defenseSkill.getSkillPower());
         assertEquals(4, defenseSkill.getCoinPower());
         assertEquals(1, defenseSkill.getCoinNumber());
+        assertEquals(1, defenseSkill.getWeight());
         assertEquals("[사용시] 조작 패널에서 자신의 양 옆에 위치한 아군의 정신력 5 회복", defenseSkill.getEffect());
     }
 

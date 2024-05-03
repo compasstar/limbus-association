@@ -13,9 +13,8 @@ public class IdentityController {
 
     private final IdentityService identityService;
 
-    @GetMapping("/identities/{identityId}")
-    public IdentityResponse getIdentity(@PathVariable(name = "identityId") Long identityId) {
-        return identityService.getIdentity(identityId);
+    @GetMapping("/identities/{englishName}")
+    public IdentityResponse getIdentityByEnglishName(@PathVariable(name = "englishName") String name) {
+        return identityService.getIdentityByEnglishName(name);
     }
-
 }

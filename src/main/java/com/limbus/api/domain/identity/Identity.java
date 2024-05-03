@@ -25,7 +25,11 @@ public class Identity {
     @Enumerated(EnumType.STRING)
     private Sinner sinner;
 
+    @Column(unique = true)
     private String name;
+
+    @Column(unique = true)
+    private String englishName;
 
     //인격등급 (1성, 2성, 3성)
     private Integer rarity;
@@ -52,9 +56,10 @@ public class Identity {
     private List<PassiveSkill> passiveSkills = new ArrayList<>();
 
     @Builder
-    public Identity(Sinner sinner, String name, Integer rarity, Status status, Resistances resistances, Sanity sanity) {
+    public Identity(Sinner sinner, String name, String englishName, Integer rarity, Status status, Resistances resistances, Sanity sanity) {
         this.sinner = sinner;
         this.name = name;
+        this.englishName = englishName;
         this.rarity = rarity;
         this.status = status;
         this.resistances = resistances;

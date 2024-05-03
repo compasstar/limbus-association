@@ -17,7 +17,7 @@ public class IdentityRepositoryImpl implements IdentityRepositoryCustom {
     }
 
     @Override
-    public List<Identity> findByName(String name) {
+    public List<Identity> findByPartName(String name) {
         return queryFactory
                 .selectFrom(identity)
                 .where(identity.name.contains(name))

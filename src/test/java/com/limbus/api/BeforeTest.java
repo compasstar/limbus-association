@@ -69,6 +69,7 @@ public class BeforeTest {
         Identity identity = Identity.builder()
                 .sinner(Sinner.ISHMAEL)
                 .name("피쿼드호 선장")
+                .englishName("The_Pequod_Captain_Ishmael")
                 .rarity(3)
                 .status(status)
                 .resistances(resistances)
@@ -186,6 +187,7 @@ public class BeforeTest {
                 .coinPower(4)
                 .coinNumber(1)
                 .effect("[사용시] 조작 패널에서 자신의 양 옆에 위치한 아군의 정신력 5 회복")
+                .weight(1)
                 .identity(identity)
                 .build();
 
@@ -258,6 +260,7 @@ public class BeforeTest {
         Identity identity = Identity.builder()
                 .sinner(Sinner.ISHMAEL)
                 .name("R사 제 4무리 순록팀")
+                .englishName("R_Corp._4th_Pack_Reindeer_Ishmael")
                 .rarity(3)
                 .status(status)
                 .resistances(resistances)
@@ -381,6 +384,7 @@ public class BeforeTest {
                 .coinPower(10)
                 .coinNumber(1)
                 .effect("[회피 성공시] 자신의 충전 횟수 1 증가")
+                .weight(1)
                 .identity(identity)
                 .build();
 

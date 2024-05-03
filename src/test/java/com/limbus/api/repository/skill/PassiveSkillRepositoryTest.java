@@ -38,7 +38,8 @@ class PassiveSkillRepositoryTest {
     @DisplayName("findByIdentity 테스트")
     void findByIdentityTest() {
         //when
-        Long identityId = identityRepository.findByName("피쿼드호 선장").get(0).getId();
+        Long identityId = identityRepository.findByEnglishName("The_Pequod_Captain_Ishmael")
+                .orElseThrow(IllegalArgumentException::new).getId();
         List<PassiveSkill> passiveSkills = passiveSkillRepository.findByIdentityId(identityId);
         PassiveSkill passiveSkill1 = passiveSkills.get(0);
         PassiveSkill passiveSkill2 = passiveSkills.get(1);
@@ -70,7 +71,7 @@ class PassiveSkillRepositoryTest {
     @DisplayName("findByIdentityAndSupport 테스트")
     void findByIdentityAndSupportTest() {
         //when
-        Long identityId = identityRepository.findByName("피쿼드호 선장").get(0).getId();
+        Long identityId = identityRepository.findByEnglishName("The_Pequod_Captain_Ishmael").orElseThrow(IllegalArgumentException::new).getId();
         List<PassiveSkill> passiveSkillsNotSupport = passiveSkillRepository.findByIdentityIdAndSupport(identityId, false);
         List<PassiveSkill> passiveSkillsSupport = passiveSkillRepository.findByIdentityIdAndSupport(identityId, true);
 

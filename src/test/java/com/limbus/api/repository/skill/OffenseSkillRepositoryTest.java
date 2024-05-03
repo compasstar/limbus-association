@@ -38,7 +38,7 @@ class OffenseSkillRepositoryTest {
     @DisplayName("findByIdentityId 테스트")
     void findByIdentityIdTest() {
         //when
-        Long identityId = identityRepository.findByName("피쿼드호 선장").get(0).getId();
+        Long identityId = identityRepository.findByEnglishName("The_Pequod_Captain_Ishmael").orElseThrow(IllegalArgumentException::new).getId();
         List<OffenseSkill> offenseSkills = offenseSkillRepository.findByIdentityId(identityId);
 
         //then
@@ -49,7 +49,8 @@ class OffenseSkillRepositoryTest {
     @DisplayName("findByIdentityIdAndSlot 스킬1 테스트")
     void findByIdentityIdAndSlotTest1() {
         //when
-        Long identityId = identityRepository.findByName("피쿼드호 선장").get(0).getId();
+        Long identityId = identityRepository.findByEnglishName("The_Pequod_Captain_Ishmael")
+                .orElseThrow(IllegalArgumentException::new).getId();
         OffenseSkill offenseSkill1 = offenseSkillRepository.findByIdentityIdAndSlot(identityId, 1)
                 .orElseThrow(() -> new IllegalArgumentException("스킬1 슬롯이 존재하지 않습니다."));
 
@@ -73,7 +74,8 @@ class OffenseSkillRepositoryTest {
     @DisplayName("findByIdentityIdAndSlot 스킬2 테스트")
     void findByIdentityIdAndSlotTest2() {
         //when
-        Long identityId = identityRepository.findByName("피쿼드호 선장").get(0).getId();
+        Long identityId = identityRepository.findByEnglishName("The_Pequod_Captain_Ishmael")
+                .orElseThrow(IllegalArgumentException::new).getId();
         OffenseSkill offenseSkill2 = offenseSkillRepository.findByIdentityIdAndSlot(identityId, 2)
                 .orElseThrow(() -> new IllegalArgumentException("스킬2 슬롯이 존재하지 않습니다."));
 
@@ -97,7 +99,8 @@ class OffenseSkillRepositoryTest {
     @DisplayName("findByIdentityIdAndSlot 스킬3 테스트")
     void findByIdentityIdAndSlotTest3() {
         //when
-        Long identityId = identityRepository.findByName("피쿼드호 선장").get(0).getId();
+        Long identityId = identityRepository.findByEnglishName("The_Pequod_Captain_Ishmael")
+                .orElseThrow(IllegalArgumentException::new).getId();
         OffenseSkill offenseSkill3 = offenseSkillRepository.findByIdentityIdAndSlot(identityId, 3)
                 .orElseThrow(() -> new IllegalArgumentException("스킬3 슬롯이 존재하지 않습니다."));
 

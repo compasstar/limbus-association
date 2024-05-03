@@ -8,6 +8,7 @@ import lombok.Getter;
 @Getter
 public class PassiveSkillResponse {
 
+    private Boolean support;
     private String name;
     private String sinType;
     private String passiveType;
@@ -15,6 +16,7 @@ public class PassiveSkillResponse {
     private String effect;
 
     public PassiveSkillResponse(PassiveSkill passiveSkill) {
+        support = passiveSkill.getSupport();
         name = passiveSkill.getName();
         sinType = (passiveSkill.getSinType() != null) ? passiveSkill.getSinType().getName() : null;
         passiveType = (passiveSkill.getPassiveType() != null) ? passiveSkill.getPassiveType().getName() : null;

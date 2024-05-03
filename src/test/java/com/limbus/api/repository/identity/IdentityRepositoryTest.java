@@ -30,17 +30,15 @@ class IdentityRepositoryTest {
     }
 
     @Test
-    void findById() {
+    void findByEnglishName() {
         //when
-        Long id = identityRepository.findByName("피쿼드호 선장").get(0).getId();
-        Identity identity = identityRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 id의 인격이 존재하지 않습니다"));
+        Identity identity = identityRepository.findByEnglishName("The_Pequod_Captain_Ishmael").orElseThrow(IllegalArgumentException::new);
 
         //then
         assertNotNull(identity);
-        assertEquals(id, identity.getId());
         assertEquals(Sinner.ISHMAEL, identity.getSinner());
         assertEquals("피쿼드호 선장", identity.getName());
+        assertEquals("The_Pequod_Captain_Ishmael", identity.getEnglishName());
         assertEquals(3, identity.getRarity());
 
         assertEquals(160, identity.getStatus().getHp());
@@ -73,10 +71,10 @@ class IdentityRepositoryTest {
     }
 
     @Test
-    void findByNameTest() {
+    void findByEnglishNameTest() {
         //when
-        Identity identity = identityRepository.findByName("피쿼드호 선장").get(0);
-        Identity identity_선장 = identityRepository.findByName("선장").get(0);
+        Identity identity = identityRepository.findByEnglishName("The_Pequod_Captain_Ishmael").orElseThrow(IllegalArgumentException::new);
+        Identity identity_선장 = identityRepository.findByPartName("선장").get(0);
 
         //then
         assertEquals(identity, identity_선장);
