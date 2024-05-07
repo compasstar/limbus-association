@@ -144,15 +144,11 @@ const re = (text:String) => {
   return text.replaceAll("\\n", "</br>");
 }
 
-// axios.get(`/api/identities/${props.identityId}`)
-//     .then((response) => {
-//       identity.value = response.data;
-//     });
+
 
 axios.get(`/api/identities/${props.englishName}`)
     .then((response) => {
       identity.value = response.data;
-      console.log(identity.value);
     });
 
 const supportPassives = computed(() => {
@@ -162,43 +158,49 @@ const nonSupportPassives = computed(() => {
   return identity.value.passiveSkills.filter(passiveSkill => !passiveSkill.support);
 });
 
-
-
+const searchName = ref("")
+const searchIdentitiesInit: string[] = [];
+const searchIdentities = ref(searchIdentitiesInit);
+const search = function() {
+  axios.get(`/api/identities/search?name=${searchName.value}`)
+      .then((response) => {
+        searchIdentities.value = response.data.englishNames;
+        console.log(searchIdentities.value);
+      })
+}
 
 </script>
 
 
 <template>
   <div class="name">
-    <h1>[{{identity.sinner}}] {{identity.name}} (희귀도: {{identity.rarity}})</h1>
+    <el-text>[{{identity.sinner}}]</el-text>
+    <el-text type="primary" size="large">{{identity.name}}</el-text>
+    <el-text type="danger"> ({{identity.rarity}})</el-text>
   </div>
 
-  <div class="status-and-resistances">
-    <div class="status-container">
-      <h3>스테이터스</h3>
-      <ul class="status">
-        <li>HP: {{identity.status.hp}}</li>
-        <li>speed: {{identity.status.minSpeed}} ~ {{identity.status.maxSpeed}}</li>
-      </ul>
-    </div>
 
-    <div class="resistances-container">
-      <h3>내성 정보</h3>
-      <ul class="resistances">
-        <li>참격내성: {{identity.resistances.slashResistance}}</li>
-        <li>관통내성: {{identity.resistances.pierceResistance}}</li>
-        <li>타격내성: {{identity.resistances.bluntResistance}}</li>
-      </ul>
-    </div>
-  </div>
+  <el-descriptions title="스테이터스" direction="vertical" :column="3" border>
+    <el-descriptions-item label="hp">{{identity.status.hp}}</el-descriptions-item>
+    <el-descriptions-item label="속도">{{identity.status.minSpeed}} ~ {{identity.status.maxSpeed}}</el-descriptions-item>
+    <el-descriptions-item label="수비레벨">{{identity.status.defenseLevel}}</el-descriptions-item>
+  </el-descriptions>
+
+  <el-descriptions title="내성정보" direction="vertical" :column="3" border>
+    <el-descriptions-item label="참격내성">{{identity.resistances.slashResistance}}</el-descriptions-item>
+    <el-descriptions-item label="관통내성">{{identity.resistances.pierceResistance}}</el-descriptions-item>
+    <el-descriptions-item label="타격내성">{{identity.resistances.bluntResistance}}</el-descriptions-item>
+  </el-descriptions>
+
+
 
   <div class="skill">
-    <h2>공격스킬</h2>
+    <el-text class="title2" size="large">스킬</el-text>
     <div class="offenseSkill" v-for="(offenseSkill) in identity.offenseSkills">
-      <div class="slot">
+      <el-card class="slot">
         스킬{{offenseSkill.slot}}
-      </div>
-      <div class="content">
+      </el-card>
+      <el-card class="content">
         <div>{{offenseSkill.name}} x{{offenseSkill.amount}} ({{offenseSkill.offenseType}})</div>
         <div>위력 {{offenseSkill.skillPower}} + {{offenseSkill.coinPower}} x {{offenseSkill.coinNumber}}(코인개수)</div>
         <div>공격레벨 {{offenseSkill.level}} 가중치 {{offenseSkill.weight}} [{{offenseSkill.sinType}}]</div>
@@ -206,79 +208,84 @@ const nonSupportPassives = computed(() => {
         <div class="coin-effect" v-for="(offenseSkillCoinEffect) in offenseSkill.offenseSkillCoinEffects">
           <div>- 코인{{offenseSkillCoinEffect.coin}}: {{offenseSkillCoinEffect.effect}}</div>
         </div>
-      </div>
+      </el-card>
     </div>
 
     <div class="defenseSkill" v-for="(defenseSkill) in identity.defenseSkills">
-      <div class="slot">
+      <el-card class="slot">
         수비
-      </div>
-      <div class="content">
+      </el-card>
+      <el-card class="content">
         <div>{{defenseSkill.name}} ({{defenseSkill.defenseType}})</div>
         <div>위력 {{defenseSkill.skillPower}} + {{defenseSkill.coinPower}} x {{defenseSkill.coinNumber}}</div>
         <div>수비레벨 {{defenseSkill.level}} 가중치 {{defenseSkill.weight}} [{{defenseSkill.sinType}}]</div>
         <div class="effect mt-2" v-html="re(defenseSkill.effect)"></div>
-      </div>
+      </el-card>
     </div>
   </div>
 
 
-  <h2>패시브</h2>
   <div class="passiveSkills">
+    <el-text class="title2" size="large">패시브</el-text>
     <div class="passiveSkill" v-for="(passiveSkill) in nonSupportPassives">
-      <div class="slot">
+      <el-card class="slot">
         <div>패시브</div>
-      </div>
-      <div class="content">
+      </el-card>
+      <el-card class="content">
         <div>{{passiveSkill.name}}</div>
         <div v-if="passiveSkill.amount">{{passiveSkill.sinType}} x{{passiveSkill.amount}} {{passiveSkill.passiveType}}</div>
         <div class="effect" v-html="re(passiveSkill.effect)"></div>
-      </div>
+      </el-card>
     </div>
     <div class="passiveSkill" v-for="(passiveSkill) in supportPassives">
-      <div class="slot">
+      <el-card class="slot">
         <div>서포트<br>패시브</div>
-      </div>
-      <div class="content">
+      </el-card>
+      <el-card class="content">
         <div>{{passiveSkill.name}}</div>
         <div v-if="passiveSkill.amount">{{passiveSkill.sinType}} x{{passiveSkill.amount}} {{passiveSkill.passiveType}}</div>
         <div class="effect" v-html="re(passiveSkill.effect)"></div>
-      </div>
+      </el-card>
     </div>
   </div>
 
 
-  <h2>정신력</h2>
+
   <div class="sanity-container">
+    <el-text class="title2" size="large">정신력</el-text>
     <div class="sanity">
-      <div class="slot">
+      <el-card class="slot">
         패닉<br>유형
-      </div>
-      <div class="content effect">
+      </el-card>
+      <el-card class="content effect">
         {{identity.sanity.panic}}
-      </div>
+      </el-card>
     </div>
     <div class="sanity">
-      <div class="slot text-info">
+      <el-card class="slot text-info">
         정신력<br>증가<br>조건
-      </div>
-      <div class="content effect" v-html="re(identity.sanity.factorsIncreasingSanity)"></div>
+      </el-card>
+      <el-card class="content effect" v-html="re(identity.sanity.factorsIncreasingSanity)"></el-card>
     </div>
     <div class="sanity">
-      <div class="slot text-danger">
+      <el-card class="slot text-danger">
         정신력<br>감소<br>조건
-      </div>
-      <div class="content effect" v-html="re(identity.sanity.factorsDecreasingSanity)"></div>
+      </el-card>
+      <el-card class="content effect" v-html="re(identity.sanity.factorsDecreasingSanity)"></el-card>
     </div>
   </div>
 
 
-
-  <div class="search">
     <div class="icons"></div>
-    <div><input type="text" placeholder="수감자 검색"></div>
+    <el-input v-model="searchName" placeholder="수감자 이름"></el-input>
+    <el-button type="primary" @click="search">검색</el-button>
     <div class="result"></div>
-  </div>
+
+    <div v-for="(searchIdentity) in searchIdentities">
+      <div>{{searchIdentity}}</div>
+    </div>
+
+
 
 </template>
 
@@ -290,6 +297,10 @@ ul {
 
 .name {
   text-align: center;
+}
+
+.el-descriptions {
+  margin-top: 2rem;
 }
 
 .status-and-resistances {
@@ -306,38 +317,46 @@ ul {
 }
 
 .skill {
-  border-style: solid;
+  margin-top: 2rem;
+}
 
-  .offenseSkill {
-    display: flex;
-    border-style: solid;
-  }
 
-  .defenseSkill {
+
+.title2 {
+  font-size: 24px;
+}
+
+
+
+.offenseSkill {
+  display: flex;
+}
+
+.defenseSkill {
+  display: flex;
+}
+
+.passiveSkills {
+  margin-top: 2rem;
+  .passiveSkill {
     display: flex;
-    border-style: solid;
   }
 }
 
-.passiveSkill {
-  display: flex;
-  border-style: solid;
-}
-
-.sanity {
-  display: flex;
-  border-style: solid;
+.sanity-container {
+  margin-top: 2rem;
+  .sanity {
+    display: flex;
+    .content {
+      padding: 1rem;
+    }
+  }
 }
 
 .slot {
-  align-content: center;
-  text-align: center;
   width: 10%;
-  margin-left: 1rem;
-
-  border-style: solid;
-  border-color: black;
 }
+
 .content {
   width: 90%;
   .effect {
@@ -347,9 +366,6 @@ ul {
     font-size: 0.8rem;
   }
 }
-
-
-
 
 
 </style>
