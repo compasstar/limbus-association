@@ -187,30 +187,30 @@ const replaceIdentity = function (englishName: string) {
 
 
 <template>
-  <div class="name">
-    <el-text>[{{ identity.sinner }}]</el-text>
-    <el-text type="primary" size="large">{{ identity.name }}</el-text>
-    <el-text type="danger"> ({{ identity.rarity }})</el-text>
+  <div class="text-center">
+    <el-text class="fs-5">[{{ identity.sinner }}]</el-text>
+    <el-text type="primary" class="fs-1">{{ identity.name }}</el-text>
+    <el-text class="fs-5" type="danger"> ({{ identity.rarity }})</el-text>
   </div>
 
 
-  <el-descriptions title="스테이터스" direction="vertical" :column="3" border>
+  <el-descriptions class="mt-4" title="스테이터스" direction="vertical" :column="3" border>
     <el-descriptions-item label="hp">{{ identity.status.hp }}</el-descriptions-item>
     <el-descriptions-item label="속도">{{ identity.status.minSpeed }} ~ {{ identity.status.maxSpeed }}
     </el-descriptions-item>
     <el-descriptions-item label="수비레벨">{{ identity.status.defenseLevel }}</el-descriptions-item>
   </el-descriptions>
 
-  <el-descriptions title="내성정보" direction="vertical" :column="3" border>
+  <el-descriptions class="mt-4" title="내성정보" direction="vertical" :column="3" border>
     <el-descriptions-item label="참격내성">{{ identity.resistances.slashResistance }}</el-descriptions-item>
     <el-descriptions-item label="관통내성">{{ identity.resistances.pierceResistance }}</el-descriptions-item>
     <el-descriptions-item label="타격내성">{{ identity.resistances.bluntResistance }}</el-descriptions-item>
   </el-descriptions>
 
 
-  <div class="skill">
-    <el-text class="title2" size="large">스킬</el-text>
-    <div class="offenseSkill" v-for="(offenseSkill) in identity.offenseSkills">
+  <div class="skill mt-5">
+    <el-text class="fs-2" size="large">스킬</el-text>
+    <div class="offenseSkill d-flex" v-for="(offenseSkill) in identity.offenseSkills">
       <el-card class="slot">
         스킬{{ offenseSkill.slot }}
       </el-card>
@@ -218,7 +218,7 @@ const replaceIdentity = function (englishName: string) {
         <div>{{ offenseSkill.name }} x{{ offenseSkill.amount }} ({{ offenseSkill.offenseType }})</div>
         <div>위력 {{ offenseSkill.skillPower }} + {{ offenseSkill.coinPower }} x {{ offenseSkill.coinNumber }}(코인개수)</div>
         <div>공격레벨 {{ offenseSkill.level }} 가중치 {{ offenseSkill.weight }} [{{ offenseSkill.sinType }}]</div>
-        <div class="effect mt-2" v-for="(effect) in offenseSkill.effect">{{ effect }}</div>
+        <div class="mt-2 effect" v-for="(effect) in offenseSkill.effect">{{ effect }}</div>
         <div class="coin-effect" v-for="(offenseSkillCoinEffect) in offenseSkill.offenseSkillCoinEffects">
           <div>
             코인{{ offenseSkillCoinEffect.coin }}
@@ -228,7 +228,7 @@ const replaceIdentity = function (englishName: string) {
       </el-card>
     </div>
 
-    <div class="defenseSkill" v-for="(defenseSkill) in identity.defenseSkills">
+    <div class="defenseSkill d-flex" v-for="(defenseSkill) in identity.defenseSkills">
       <el-card class="slot">
         수비
       </el-card>
@@ -243,9 +243,9 @@ const replaceIdentity = function (englishName: string) {
   </div>
 
 
-  <div class="passiveSkills">
-    <el-text class="title2" size="large">패시브</el-text>
-    <div class="passiveSkill" v-for="(passiveSkill) in nonSupportPassives">
+  <div class="passiveSkills mt-5">
+    <el-text class="fs-2" size="large">패시브</el-text>
+    <div class="passiveSkill d-flex" v-for="(passiveSkill) in nonSupportPassives">
       <el-card class="slot">
         <div>패시브</div>
       </el-card>
@@ -257,7 +257,7 @@ const replaceIdentity = function (englishName: string) {
         <div class="effect" v-for="(effect) in passiveSkill.effect">{{ effect }}</div>
       </el-card>
     </div>
-    <div class="passiveSkill" v-for="(passiveSkill) in supportPassives">
+    <div class="passiveSkill d-flex" v-for="(passiveSkill) in supportPassives">
       <el-card class="slot">
         <div>서포트<br>패시브</div>
       </el-card>
@@ -272,9 +272,9 @@ const replaceIdentity = function (englishName: string) {
   </div>
 
 
-  <div class="sanity-container">
-    <el-text class="title2" size="large">정신력</el-text>
-    <div class="sanity">
+  <div class="sanity-container mt-5">
+    <el-text class="fs-2">정신력</el-text>
+    <div class="sanity d-flex">
       <el-card class="slot">
         패닉<br>유형
       </el-card>
@@ -282,7 +282,7 @@ const replaceIdentity = function (englishName: string) {
         <div v-for="(factor) in identity.sanity.panic">{{ factor }}</div>
       </el-card>
     </div>
-    <div class="sanity">
+    <div class="sanity d-flex">
       <el-card class="slot text-info">
         정신력<br>증가<br>조건
       </el-card>
@@ -290,7 +290,7 @@ const replaceIdentity = function (englishName: string) {
         <div v-for="(factor) in identity.sanity.factorsIncreasingSanity">{{ factor }}</div>
       </el-card>
     </div>
-    <div class="sanity">
+    <div class="sanity d-flex">
       <el-card class="slot text-danger">
         정신력<br>감소<br>조건
       </el-card>
@@ -301,79 +301,24 @@ const replaceIdentity = function (englishName: string) {
   </div>
 
 
-  <div class="icons"></div>
-  <el-input v-model="searchInput" id="search-input" placeholder="수감자 이름"></el-input>
-  <el-button type="primary" @click="search">검색</el-button>
-  <div class="result"></div>
+  <div class="mt-5">
+    <el-text class="fs-2">수감자 검색</el-text>
+    <div class="icons"></div>
+    <el-input v-model="searchInput" id="search-input" placeholder="수감자 이름"></el-input>
+    <el-button type="primary" @click="search">검색</el-button>
+    <div class="result"></div>
 
-  <div v-for="(searchIdentity) in searchIdentities">
-    <el-button v-on:click="replaceIdentity(searchIdentity.englishName)">{{ searchIdentity.name }}</el-button>
+    <div v-for="(searchIdentity) in searchIdentities">
+      <el-button v-on:click="replaceIdentity(searchIdentity.englishName)">{{ searchIdentity.name }}</el-button>
+    </div>
   </div>
 </template>
 
 
 <style scoped lang="scss">
-ul {
-  list-style: none;
-}
-
-.name {
-  text-align: center;
-}
-
-.el-descriptions {
-  margin-top: 2rem;
-}
-
-.status-and-resistances {
-  display: flex;
-  justify-content: space-around;
-  text-align: center;
-
-  .status {
-    display: flex;
-  }
-
-  .resistances {
-    display: flex;
-    justify-content: space-around;
-  }
-}
-
-.skill {
-  margin-top: 2rem;
-}
-
-.title2 {
-  font-size: 24px;
-}
-
-.offenseSkill {
-  display: flex;
-}
-
-.defenseSkill {
-  display: flex;
-}
-
-.passiveSkills {
-  margin-top: 2rem;
-
-  .passiveSkill {
-    display: flex;
-  }
-}
-
-.sanity-container {
-  margin-top: 2rem;
-
-  .sanity {
-    display: flex;
-  }
-}
-
 .slot {
   width: 10%;
+  text-align: center;
 }
 
 .content {
@@ -387,6 +332,4 @@ ul {
     font-size: 0.8rem;
   }
 }
-
-
 </style>
