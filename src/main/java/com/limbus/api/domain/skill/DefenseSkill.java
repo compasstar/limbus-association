@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -43,8 +45,8 @@ public class DefenseSkill {
     //가중치
     private Integer weight;
 
-    @Lob
-    private String effect;
+    @ElementCollection
+    private List<String> effect;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "identity_id")
@@ -52,7 +54,7 @@ public class DefenseSkill {
 
 
     @Builder
-    public DefenseSkill(String name, Integer level, DefenseType defenseType, SinType sinType, Integer skillPower, Integer coinPower, Integer coinNumber, String effect, Identity identity, Integer weight) {
+    public DefenseSkill(String name, Integer level, DefenseType defenseType, SinType sinType, Integer skillPower, Integer coinPower, Integer coinNumber, List<String> effect, Identity identity, Integer weight) {
         this.name = name;
         this.level = level;
         this.defenseType = defenseType;

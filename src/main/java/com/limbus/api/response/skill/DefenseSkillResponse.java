@@ -5,6 +5,8 @@ import com.limbus.api.domain.type.DefenseType;
 import com.limbus.api.domain.type.SinType;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class DefenseSkillResponse {
 
@@ -15,7 +17,7 @@ public class DefenseSkillResponse {
     private Integer skillPower;
     private Integer coinPower;
     private Integer coinNumber;
-    private String effect;
+    private List<String> effect;
     private Integer weight;
 
     public DefenseSkillResponse(DefenseSkill defenseSkill) {

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -65,7 +66,12 @@ class OffenseSkillRepositoryTest {
         assertEquals(4, offenseSkill1.getCoinPower());
         assertEquals(2, offenseSkill1.getCoinNumber());
         assertEquals(1, offenseSkill1.getWeight());
-        assertEquals("[전투 시작시] 조작 패널에서 자신의 양 옆의 아군에게 방어 레벨 증가 2 부여\n[사용시] 다음 턴에 최대 체력이 가장 높은 아군의 왼쪽 슬롯의 도발치가 (가장 높은 공명 수 )만큼 증가 (턴 당 1회)\n- 가장 높은 완전 공명의 합이 4이상이면, 효과 발동 시 보호 1 부여", offenseSkill1.getEffect());
+
+        List<String> effect1 = new ArrayList<>();
+        effect1.add("[전투 시작시] 조작 패널에서 자신의 양 옆의 아군에게 방어 레벨 증가 2 부여");
+        effect1.add("[사용시] 다음 턴에 최대 체력이 가장 높은 아군의 왼쪽 슬롯의 도발치가 (가장 높은 공명 수 )만큼 증가 (턴 당 1회)");
+        effect1.add("- 가장 높은 완전 공명의 합이 4이상이면, 효과 발동 시 보호 1 부여");
+        assertEquals(effect1, offenseSkill1.getEffect());
 
         assertEquals(1, offenseSkill1.getOffenseSkillCoinEffects().size());
     }
@@ -90,7 +96,13 @@ class OffenseSkillRepositoryTest {
         assertEquals(4, offenseSkill2.getCoinPower());
         assertEquals(3, offenseSkill2.getCoinNumber());
         assertEquals(1, offenseSkill2.getWeight());
-        assertEquals("[전투 시작시] 조작 패널에서 자신의 양 옆의 아군에게 공격 레벨 증가 3 부여\n[사용시] 가장 높은 공명의 공명당 20% 확률로 조작 패널에서 자신의 우측에 위치한 아군에게 이번 턴에 원호 공격을 명령함\n- 가장 높은 완전 공명의 합이 4 이상이면, 대상에게 피해량 증가 2 부여\n- 오만 완전 공명의 합이 4 이상이면, 오만 위력 증가 2 추가 부여", offenseSkill2.getEffect());
+
+        List<String> effect2 = new ArrayList<>();
+        effect2.add("[전투 시작시] 조작 패널에서 자신의 양 옆의 아군에게 공격 레벨 증가 3 부여");
+        effect2.add("[사용시] 가장 높은 공명의 공명당 20% 확률로 조작 패널에서 자신의 우측에 위치한 아군에게 이번 턴에 원호 공격을 명령함");
+        effect2.add("- 가장 높은 완전 공명의 합이 4 이상이면, 대상에게 피해량 증가 2 부여");
+        effect2.add("- 오만 완전 공명의 합이 4 이상이면, 오만 위력 증가 2 추가 부여");
+        assertEquals(effect2, offenseSkill2.getEffect());
 
         assertEquals(2, offenseSkill2.getOffenseSkillCoinEffects().size());
     }
@@ -115,7 +127,12 @@ class OffenseSkillRepositoryTest {
         assertEquals(3, offenseSkill3.getCoinPower());
         assertEquals(4, offenseSkill3.getCoinNumber());
         assertEquals(1, offenseSkill3.getWeight());
-        assertEquals("대상의 잃은 체력 1%당 피해랑 + 0.3% (최대 30%)\n대상의 출혈 5당 코인 위력 + 1 (최대 2)\n[공격 종료시] 적이 흐트러짐이 되었거나 사망했으면, 정신력이 가장 낮은 아군 1 + (가장 높은 완전 공명 수/2)명의 정신력 10 회복, 호흡 2, 호흡 횟수 4 부여 (최대 4회. 최대 회복 인원 수: 4명)", offenseSkill3.getEffect());
+
+        List<String> effect3 = new ArrayList<>();
+        effect3.add("대상의 잃은 체력 1%당 피해랑 + 0.3% (최대 30%)");
+        effect3.add("대상의 출혈 5당 코인 위력 + 1 (최대 2)");
+        effect3.add("[공격 종료시] 적이 흐트러짐이 되었거나 사망했으면, 정신력이 가장 낮은 아군 1 + (가장 높은 완전 공명 수/2)명의 정신력 10 회복, 호흡 2, 호흡 횟수 4 부여 (최대 4회. 최대 회복 인원 수: 4명)");
+        assertEquals(effect3, offenseSkill3.getEffect());
 
         assertEquals(3, offenseSkill3.getOffenseSkillCoinEffects().size());
     }

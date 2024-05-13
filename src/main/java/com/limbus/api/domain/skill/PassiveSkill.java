@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @Getter
 @Entity
@@ -34,8 +36,8 @@ public class PassiveSkill {
     //몇 개 공명, 몇 개 보유
     private Integer amount;
 
-    @Lob
-    private String effect;
+    @ElementCollection
+    private List<String> effect;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "identity_id")
@@ -43,7 +45,7 @@ public class PassiveSkill {
 
 
     @Builder
-    public PassiveSkill(Boolean support, String name, SinType sinType, PassiveType passiveType, Integer amount, String effect, Identity identity) {
+    public PassiveSkill(Boolean support, String name, SinType sinType, PassiveType passiveType, Integer amount, List<String> effect, Identity identity) {
         this.support = support;
         this.name = name;
         this.sinType = sinType;

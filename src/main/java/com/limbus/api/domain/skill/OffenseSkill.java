@@ -56,8 +56,11 @@ public class OffenseSkill {
     //가중치
     private Integer weight;
 
-    @Lob
-    private String effect;
+//    @Lob
+//    private String effect;
+
+    @ElementCollection
+    private List<String> effect;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "identity_id")
@@ -69,7 +72,7 @@ public class OffenseSkill {
     @Builder
     public OffenseSkill(Integer slot, String name, Integer level, OffenseType offenseType, SinType sinType,
                         Integer amount, Integer skillPower, Integer coinPower, Integer coinNumber, Integer weight,
-                        String effect, Identity identity) {
+                        List<String> effect, Identity identity) {
         this.slot = slot;
         this.name = name;
         this.level = level;

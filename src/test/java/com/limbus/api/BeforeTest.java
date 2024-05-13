@@ -16,6 +16,8 @@ import com.limbus.api.repository.skill.OffenseSkillRepository;
 import com.limbus.api.repository.skill.PassiveSkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class BeforeTest {
@@ -58,11 +60,24 @@ public class BeforeTest {
                 .bluntResistance(2.0)
                 .build();
 
+        List<String> panic = new ArrayList<>();
+        panic.add("한 턴 동안 행동하지 않음");
+
+        List<String> factorsIncreasingSanity = new ArrayList<>();
+        factorsIncreasingSanity.add("합 승리 시 합 횟수에 비례하여 증가");
+        factorsIncreasingSanity.add("(증가량: 기본 값 10, 2합부터 1합당 20%식 증가)");
+        factorsIncreasingSanity.add("적 처치 시 처치한 적의 레벨에 관계 없이 10 증가");
+        factorsIncreasingSanity.add("적 처치 시 처치한 적의 레벨이 자신의 레벨 이상인 경우 15 증가");
+        factorsIncreasingSanity.add("아군 사망 시 사망한 아군의 레벨에 관계 없이 10 증가");
+
+        List<String> factorsDecreasingSanity = new ArrayList<>();
+        factorsDecreasingSanity.add("아군이 처치한 적의 레벨이 자신의 레벨 이상인 경우 5 감소. 원호 공격이 부여된 아군이 처치한 경우에는 감소하지 않음");
+
         //Sanity
         Sanity sanity = Sanity.builder()
-                .panic("한 턴 동안 행동하지 않음")
-                .factorsIncreasingSanity("합 승리 시 합 횟수에 비례하여 증가\n(증가량: 기본 값 10, 2합부터 1합당 20%식 증가)\n적 처치 시 처치한 적의 레벨에 관계 없이 10 증가\n적 처치 시 처치한 적의 레벨이 자신의 레벨 이상인 경우 15 증가\n아군 사망 시 사망한 아군의 레벨에 관계 없이 10 증가")
-                .factorsDecreasingSanity("아군이 처치한 적의 레벨이 자신의 레벨 이상인 경우 5 감소. 원호 공격이 부여된 아군이 처치한 경우에는 감소하지 않음.")
+                .panic(panic)
+                .factorsIncreasingSanity(factorsIncreasingSanity)
+                .factorsDecreasingSanity(factorsDecreasingSanity)
                 .build();
 
         //Identity
@@ -82,6 +97,11 @@ public class BeforeTest {
         /**
          * 2. save OffenseSkill
          */
+        List<String> effect1 = new ArrayList<>();
+        effect1.add("[전투 시작시] 조작 패널에서 자신의 양 옆의 아군에게 방어 레벨 증가 2 부여");
+        effect1.add("[사용시] 다음 턴에 최대 체력이 가장 높은 아군의 왼쪽 슬롯의 도발치가 (가장 높은 공명 수)만큼 증가 (턴 당 1회)");
+        effect1.add("- 가장 높은 완전 공명의 합이 4이상이면, 효과 발동 시 보호 1 부여");
+
         OffenseSkill offenseSkill1 = OffenseSkill.builder()
                 .slot(1)
                 .name("내 주위에 서라!")
@@ -93,9 +113,15 @@ public class BeforeTest {
                 .coinPower(4)
                 .coinNumber(2)
                 .weight(1)
-                .effect("[전투 시작시] 조작 패널에서 자신의 양 옆의 아군에게 방어 레벨 증가 2 부여\n[사용시] 다음 턴에 최대 체력이 가장 높은 아군의 왼쪽 슬롯의 도발치가 (가장 높은 공명 수 )만큼 증가 (턴 당 1회)\n- 가장 높은 완전 공명의 합이 4이상이면, 효과 발동 시 보호 1 부여")
+                .effect(effect1)
                 .identity(identity)
                 .build();
+
+        List<String> effect2 = new ArrayList<>();
+        effect2.add("[전투 시작시] 조작 패널에서 자신의 양 옆의 아군에게 공격 레벨 증가 3 부여");
+        effect2.add("[사용시] 가장 높은 공명의 공명당 20% 확률로 조작 패널에서 자신의 우측에 위치한 아군에게 이번 턴에 원호 공격을 명령함");
+        effect2.add("- 가장 높은 완전 공명의 합이 4 이상이면, 대상에게 피해량 증가 2 부여");
+        effect2.add("- 오만 완전 공명의 합이 4 이상이면, 오만 위력 증가 2 추가 부여");
 
         OffenseSkill offenseSkill2 = OffenseSkill.builder()
                 .slot(2)
@@ -108,10 +134,14 @@ public class BeforeTest {
                 .coinPower(4)
                 .coinNumber(3)
                 .weight(1)
-                .effect("[전투 시작시] 조작 패널에서 자신의 양 옆의 아군에게 공격 레벨 증가 3 부여\n[사용시] 가장 높은 공명의 공명당 20% 확률로 조작 패널에서 자신의 우측에 위치한 아군에게 이번 턴에 원호 공격을 명령함\n- 가장 높은 완전 공명의 합이 4 이상이면, 대상에게 피해량 증가 2 부여\n- 오만 완전 공명의 합이 4 이상이면, 오만 위력 증가 2 추가 부여")
+                .effect(effect2)
                 .identity(identity)
                 .build();
 
+        List<String> effect3 = new ArrayList<>();
+        effect3.add("대상의 잃은 체력 1%당 피해랑 + 0.3% (최대 30%)");
+        effect3.add("대상의 출혈 5당 코인 위력 + 1 (최대 2)");
+        effect3.add("[공격 종료시] 적이 흐트러짐이 되었거나 사망했으면, 정신력이 가장 낮은 아군 1 + (가장 높은 완전 공명 수/2)명의 정신력 10 회복, 호흡 2, 호흡 횟수 4 부여 (최대 4회. 최대 회복 인원 수: 4명)");
 
         OffenseSkill offenseSkill3 = OffenseSkill.builder()
                 .slot(3)
@@ -124,7 +154,7 @@ public class BeforeTest {
                 .coinPower(3)
                 .coinNumber(4)
                 .weight(1)
-                .effect("대상의 잃은 체력 1%당 피해랑 + 0.3% (최대 30%)\n대상의 출혈 5당 코인 위력 + 1 (최대 2)\n[공격 종료시] 적이 흐트러짐이 되었거나 사망했으면, 정신력이 가장 낮은 아군 1 + (가장 높은 완전 공명 수/2)명의 정신력 10 회복, 호흡 2, 호흡 횟수 4 부여 (최대 4회. 최대 회복 인원 수: 4명)")
+                .effect(effect3)
                 .identity(identity)
                 .build();
 
@@ -138,32 +168,32 @@ public class BeforeTest {
          */
         OffenseSkillCoinEffect offenseSkillCoinEffect1Coin2 = OffenseSkillCoinEffect.builder()
                 .coin(2)
-                .effect("[적중시] 출혈 2 부여")
+                .effect(new ArrayList<>(List.of("[적중시] 출혈 2 부여")))
                 .offenseSkill(offenseSkill1)
                 .build();
         OffenseSkillCoinEffect offenseSkillCoinEffect2Coin2 = OffenseSkillCoinEffect.builder()
                 .coin(2)
-                .effect("[적중시] 출혈 2 부여")
+                .effect(new ArrayList<>(List.of("[적중시] 출혈 2 부여")))
                 .offenseSkill(offenseSkill2)
                 .build();
         OffenseSkillCoinEffect offenseSkillCoinEffect2Coin3 = OffenseSkillCoinEffect.builder()
                 .coin(3)
-                .effect("[적중시] 화상 1 부여")
+                .effect(new ArrayList<>(List.of("[적중시] 화상 1 부여")))
                 .offenseSkill(offenseSkill2)
                 .build();
         OffenseSkillCoinEffect offenseSkillCoinEffect3Coin2 = OffenseSkillCoinEffect.builder()
                 .coin(2)
-                .effect("[적중시] 출혈 횟수 1 증가")
+                .effect(new ArrayList<>(List.of("[적중시] 출혈 횟수 1 증가")))
                 .offenseSkill(offenseSkill3)
                 .build();
         OffenseSkillCoinEffect offenseSkillCoinEffect3Coin3 = OffenseSkillCoinEffect.builder()
                 .coin(3)
-                .effect("[적중시] 출혈 2 부여")
+                .effect(new ArrayList<>(List.of("[적중시] 출혈 2 부여")))
                 .offenseSkill(offenseSkill3)
                 .build();
         OffenseSkillCoinEffect offenseSkillCoinEffect3Coin4 = OffenseSkillCoinEffect.builder()
                 .coin(4)
-                .effect("[적중시] 화상 횟수 1 증가")
+                .effect(new ArrayList<>(List.of("[적중시] 화상 횟수 1 증가")))
                 .offenseSkill(offenseSkill3)
                 .build();
 
@@ -178,6 +208,9 @@ public class BeforeTest {
         /**
          * 3. save DefenseSkill
          */
+        List<String> effectDefense = new ArrayList<>();
+        effectDefense.add("[사용시] 조작 패널에서 자신의 양 옆에 위치한 아군의 정신력 5 회복");
+
         DefenseSkill defenseSkill = DefenseSkill.builder()
                 .name("공포를 날려주지")
                 .level(37)
@@ -186,7 +219,7 @@ public class BeforeTest {
                 .skillPower(10)
                 .coinPower(4)
                 .coinNumber(1)
-                .effect("[사용시] 조작 패널에서 자신의 양 옆에 위치한 아군의 정신력 5 회복")
+                .effect(effectDefense)
                 .weight(1)
                 .identity(identity)
                 .build();
@@ -197,22 +230,34 @@ public class BeforeTest {
         /**
          * 4. save PassiveSkill
          */
+        List<String> effectPassive1 = new ArrayList<>();
+        effectPassive1.add("자신의 공격 종료 시에 대상이 사망했으면,");
+        effectPassive1.add("- 호흡 4, 호흡 횟수를 2 얻고, 다음 턴에 과열된 가스 작살 상태가 됨");
+        effectPassive1.add("- 자신을 제외한 정신력이 가장 낮은 아군 2명의 정신력 7 회복, 호흡 4 부여");
+        effectPassive1.add("- 대상이 피쿼드호 선원이면, 정신력 5 추가 회복, 다음 턴에 관통 위력 증가 1 부여");
+
         PassiveSkill passiveSkill1 = PassiveSkill.builder()
                 .support(false)
                 .name("피쿼드호의 선장")
                 .sinType(SinType.PRIDE)
                 .passiveType(PassiveType.RESONANCE)
                 .amount(3)
-                .effect("자신의 공격 종료 시에 대상이 사망했으면,\n- 호흡 4, 호흡 횟수를 2 얻고, 다음 턴에 과열된 가스 작살 상태가 됨\n- 자신을 제외한 정신력이 가장 낮은 아군 2명의 정신력 7 회복, 호흡 4 부여\n- 대상이 피쿼드호 선원이면, 정신력 5 추가 회복, 다음 턴에 관통 위력 증가 1 부여")
+                .effect(effectPassive1)
                 .identity(identity)
                 .build();
+
+        List<String> effectPassive2 = new ArrayList<>();
+        effectPassive2.add("대상이 <호수의 존재> 면 피해량 +10%");
 
         PassiveSkill passiveSkill2 = PassiveSkill.builder()
                 .support(false)
                 .name("사냥 시간")
-                .effect("대상이 <호수의 존재> 면 피해량 +10%")
+                .effect(effectPassive2)
                 .identity(identity)
                 .build();
+
+        List<String> effectPassive3 = new ArrayList<>();
+        effectPassive3.add("정신력이 가장 높은 아군 1명이 자신의 공격 종료 시 대상이 사망했으면, 호흡 2, 호흡 횟수 2 얻음(턴 당 2회)");
 
         PassiveSkill passiveSkill3 = PassiveSkill.builder()
                 .support(true)
@@ -220,7 +265,7 @@ public class BeforeTest {
                 .sinType(SinType.PRIDE)
                 .passiveType(PassiveType.RESONANCE)
                 .amount(3)
-                .effect("정신력이 가장 높은 아군 1명이 자신의 공격 종료 시 대상이 사망했으면, 호흡 2, 호흡 횟수 2 얻음(턴 당 2회)")
+                .effect(effectPassive3)
                 .identity(identity)
                 .build();
 
@@ -250,10 +295,23 @@ public class BeforeTest {
                 .build();
 
         //정신력
+        List<String> panic = new ArrayList<>();
+        panic.add("한 턴 동안 행동하지 않음");
+
+        List<String> factorsIncreasingSanity = new ArrayList<>();
+        factorsIncreasingSanity.add("합 승리 시 합 횟수에 비례하여 증가");
+        factorsIncreasingSanity.add("(증가량: 기본 값 10, 2합부터 1합당 20%식 증가)");
+        factorsIncreasingSanity.add("적 처치 시 처치한 적의 레벨이 자신의 레벨 이상일 경우 10 증가");
+        factorsIncreasingSanity.add("아군이 처치한 적의 레벨이 자신의 레벨 이상일 경우 5 증가");
+
+        List<String> factorsDecreasingSanity = new ArrayList<>();
+        factorsDecreasingSanity.add("아군 사망 시 사망한 아군의 레벨이 자신의 레벨 이상인 경우, 레벨 차에 따라 감소");
+        factorsDecreasingSanity.add("(감소량: 기본 값 10, 레벨 차이당 10씩 증가)");
+
         Sanity sanity = Sanity.builder()
-                .panic("한 턴 동안 행동하지 않음")
-                .factorsIncreasingSanity("합 승리 시 합 횟수에 비례하여 증가\n(증가량: 기본 값 10, 2합부터 1합당 20%식 증가)\n적 처치 시 처치한 적의 레벨이 자신의 레벨 이상일 경우 10 증가\n아군이 처치한 적의 레벨이 자신의 레벨 이상일 경우 5 증가")
-                .factorsDecreasingSanity("아군 사망 시 사망한 아군의 레벨이 자신의 레벨 이상인 경우, 레벨 차에 따라 감소\n(감소량: 기본 값 10, 레벨 차이당 10씩 증가)")
+                .panic(panic)
+                .factorsIncreasingSanity(factorsIncreasingSanity)
+                .factorsDecreasingSanity(factorsDecreasingSanity)
                 .build();
 
         //인격생성
@@ -272,6 +330,10 @@ public class BeforeTest {
         /**
          * 2. save OffenseSkill
          */
+
+        List<String> effect1 = new ArrayList<>();
+        effect1.add("[사용시] 자신의 충전 횟수 2 증가");
+
         OffenseSkill offenseSkill1 = OffenseSkill.builder()
                 .slot(1)
                 .name("정신 가격")
@@ -283,9 +345,13 @@ public class BeforeTest {
                 .coinPower(5)
                 .coinNumber(2)
                 .weight(1)
-                .effect("[사용시] 자신의 충전 횟수 2 증가")
+                .effect(effect1)
                 .identity(identity)
                 .build();
+
+
+        List<String> effect2 = new ArrayList<>();
+        effect2.add("[사용시] 자신의 충전 횟수 7 증가");
 
         OffenseSkill offenseSkill2 = OffenseSkill.builder()
                 .slot(2)
@@ -298,9 +364,14 @@ public class BeforeTest {
                 .coinPower(12)
                 .coinNumber(1)
                 .weight(1)
-                .effect("[사용시] 자신의 충전 횟수 7 증가")
+                .effect(effect2)
                 .identity(identity)
                 .build();
+
+
+        List<String> effect3 = new ArrayList<>();
+        effect3.add("충전 횟수 8 소모.");
+        effect3.add("전투 시작 시 충전 횟수가 8 미만이면 무작위 대상 일방 공격");
 
         OffenseSkill offenseSkill3 = OffenseSkill.builder()
                 .slot(3)
@@ -313,7 +384,7 @@ public class BeforeTest {
                 .coinPower(6)
                 .coinNumber(4)
                 .weight(1)
-                .effect("충전 횟수 8 소모.\n전투 시작 시 충전 횟수가 8 미만이면 무작위 대상 일방 공격")
+                .effect(effect3)
                 .identity(identity)
                 .build();
 
@@ -327,37 +398,37 @@ public class BeforeTest {
          */
         OffenseSkillCoinEffect offenseSkillCoinEffect1Coin1 = OffenseSkillCoinEffect.builder()
                 .coin(1)
-                .effect("[적중시] 침잠 1 부여\n[적중시] 자신의 충전 횟수 2 증가")
+                .effect(new ArrayList<>(List.of("[적중시] 침잠 1 부여", "[적중시] 자신의 충전 횟수 2 증가")))
                 .offenseSkill(offenseSkill1)
                 .build();
         OffenseSkillCoinEffect offenseSkillCoinEffect1Coin2 = OffenseSkillCoinEffect.builder()
                 .coin(2)
-                .effect("[적중시] 침잠 1 부여\n[적중시] 자신의 충전 횟수 2 증가")
+                .effect(new ArrayList<>(List.of("[적중시] 침잠 1 부여", "[적중시] 자신의 충전 횟수 2 증가")))
                 .offenseSkill(offenseSkill1)
                 .build();
         OffenseSkillCoinEffect offenseSkillCoinEffect2Coin1 = OffenseSkillCoinEffect.builder()
                 .coin(1)
-                .effect("[적중시] 침잠 횟수 3 증가")
+                .effect(new ArrayList<>(List.of("[적중시] 침잠 횟수 3 증가")))
                 .offenseSkill(offenseSkill2)
                 .build();
         OffenseSkillCoinEffect offenseSkillCoinEffect3Coin1 = OffenseSkillCoinEffect.builder()
                 .coin(1)
-                .effect("[적중시] 침잠 1부여\n[적중시] 피해량의 40%만큼 흐트러짐 손상을 입힘")
+                .effect(new ArrayList<>(List.of("[적중시] 침잠 1부여", "[적중시] 피해량의 40%만큼 흐트러짐 손상을 입힘")))
                 .offenseSkill(offenseSkill3)
                 .build();
         OffenseSkillCoinEffect offenseSkillCoinEffect3Coin2 = OffenseSkillCoinEffect.builder()
                 .coin(2)
-                .effect("[적중시] 침잠 1부여\n[적중시] 피해량의 30%만큼 흐트러짐 손상을 입힘")
+                .effect(new ArrayList<>(List.of("[적중시] 침잠 1부여", "[적중시] 피해량의 30%만큼 흐트러짐 손상을 입힘")))
                 .offenseSkill(offenseSkill3)
                 .build();
         OffenseSkillCoinEffect offenseSkillCoinEffect3Coin3 = OffenseSkillCoinEffect.builder()
                 .coin(3)
-                .effect("[적중시] 침잠 1부여\n[적중시] 피해량의 20%만큼 흐트러짐 손상을 입힘")
+                .effect(new ArrayList<>(List.of("[적중시] 침잠 1부여", "[적중시] 피해량의 20%만큼 흐트러짐 손상을 입힘")))
                 .offenseSkill(offenseSkill3)
                 .build();
         OffenseSkillCoinEffect offenseSkillCoinEffect3Coin4 = OffenseSkillCoinEffect.builder()
                 .coin(4)
-                .effect("[적중시] 침잠 1부여\n[적중시] 피해량의 10%만큼 흐트러짐 손상을 입힘")
+                .effect(new ArrayList<>(List.of("[적중시] 침잠 1부여", "[적중시] 피해량의 10%만큼 흐트러짐 손상을 입힘")))
                 .offenseSkill(offenseSkill3)
                 .build();
 
@@ -370,11 +441,12 @@ public class BeforeTest {
         offenseSkillCoinEffectRepository.save(offenseSkillCoinEffect3Coin4);
 
 
-
-
         /**
          * 3. save DefenseSkill
          */
+        List<String> effectDefense = new ArrayList<>();
+        effectDefense.add("[회피 성공시] 자신의 충전 횟수 1 증가");
+
         DefenseSkill defenseSkill = DefenseSkill.builder()
                 .name("회피")
                 .level(43)
@@ -383,7 +455,7 @@ public class BeforeTest {
                 .skillPower(4)
                 .coinPower(10)
                 .coinNumber(1)
-                .effect("[회피 성공시] 자신의 충전 횟수 1 증가")
+                .effect(effectDefense)
                 .weight(1)
                 .identity(identity)
                 .build();
@@ -394,15 +466,22 @@ public class BeforeTest {
         /**
          * 4. save PassiveSkill
          */
+        List<String> effectPassive1 = new ArrayList<>();
+        effectPassive1.add("전투 시작 시 공격 위력 증가를 (우울 공명 수/3)만큼 얻음");
+        effectPassive1.add("턴 종료시 이번 턴에 피해를 주지 못한 경우 정신력 -15");
+
         PassiveSkill passiveSkill1 = PassiveSkill.builder()
                 .support(false)
                 .name("뇌파집속")
                 .sinType(SinType.GLOOM)
                 .passiveType(PassiveType.RESONANCE)
                 .amount(3)
-                .effect("전투 시작 시 공격 위력 증가를 (우울 공명 수/3)만큼 얻음\n턴 종료시 이번 턴에 피해를 주지 못한 경우 정신력 -15")
+                .effect(effectPassive1)
                 .identity(identity)
                 .build();
+
+        List<String> effectPassive2 = new ArrayList<>();
+        effectPassive2.add("정신력이 가장 낮은 아군 1명 타격 스킬의 피해량 + 10%");
 
         PassiveSkill passiveSkill2 = PassiveSkill.builder()
                 .support(true)
@@ -410,7 +489,7 @@ public class BeforeTest {
                 .sinType(SinType.GLOOM)
                 .passiveType(PassiveType.OWNED)
                 .amount(5)
-                .effect("정신력이 가장 낮은 아군 1명 타격 스킬의 피해량 + 10%")
+                .effect(effectPassive2)
                 .identity(identity)
                 .build();
 

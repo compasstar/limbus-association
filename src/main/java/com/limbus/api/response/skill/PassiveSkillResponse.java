@@ -1,9 +1,9 @@
 package com.limbus.api.response.skill;
 
 import com.limbus.api.domain.skill.PassiveSkill;
-import com.limbus.api.domain.type.PassiveType;
-import com.limbus.api.domain.type.SinType;
 import lombok.Getter;
+
+import java.util.List;
 
 @Getter
 public class PassiveSkillResponse {
@@ -13,7 +13,7 @@ public class PassiveSkillResponse {
     private String sinType;
     private String passiveType;
     private Integer amount;
-    private String effect;
+    private List<String> effect;
 
     public PassiveSkillResponse(PassiveSkill passiveSkill) {
         support = passiveSkill.getSupport();

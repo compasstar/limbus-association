@@ -6,6 +6,8 @@ import com.limbus.api.service.IdentityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class IdentityController {
@@ -19,6 +21,7 @@ public class IdentityController {
 
     @GetMapping("/identities/search")
     public IdentitySearchResponse searchIdentity(@RequestParam(name = "name") String name) {
+        IdentitySearchResponse identitySearchResponse = identityService.searchIdentity(name);
         return identityService.searchIdentity(name);
     }
 }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,21 +52,20 @@ class OffenseSkillCoinEffectRepositoryTest {
         //then
         assertEquals(1, offenseSkill1CoinEffects.size());
         assertEquals(2, offenseSkill1CoinEffects.get(0).getCoin());
-        assertEquals("[적중시] 출혈 2 부여", offenseSkill1CoinEffects.get(0).getEffect());
+        assertEquals(new ArrayList<>(List.of("[적중시] 출혈 2 부여")), offenseSkill1CoinEffects.get(0).getEffect());
 
         assertEquals(2, offenseSkill2CoinEffects.size());
         assertEquals(2, offenseSkill2CoinEffects.get(0).getCoin());
-        assertEquals("[적중시] 출혈 2 부여", offenseSkill2CoinEffects.get(0).getEffect());
+        assertEquals(new ArrayList<>(List.of("[적중시] 출혈 2 부여")), offenseSkill2CoinEffects.get(0).getEffect());
         assertEquals(3, offenseSkill2CoinEffects.get(1).getCoin());
-        assertEquals("[적중시] 화상 1 부여", offenseSkill2CoinEffects.get(1).getEffect());
+        assertEquals(new ArrayList<>(List.of("[적중시] 화상 1 부여")), offenseSkill2CoinEffects.get(1).getEffect());
 
         assertEquals(3, offenseSkill3CoinEffects.size());
         assertEquals(2, offenseSkill3CoinEffects.get(0).getCoin());
-        assertEquals("[적중시] 출혈 횟수 1 증가", offenseSkill3CoinEffects.get(0).getEffect());
+        assertEquals(new ArrayList<>(List.of("[적중시] 출혈 횟수 1 증가")), offenseSkill3CoinEffects.get(0).getEffect());
         assertEquals(3, offenseSkill3CoinEffects.get(1).getCoin());
-        assertEquals("[적중시] 출혈 2 부여", offenseSkill3CoinEffects.get(1).getEffect());
+        assertEquals(new ArrayList<>(List.of("[적중시] 출혈 2 부여")), offenseSkill3CoinEffects.get(1).getEffect());
         assertEquals(4, offenseSkill3CoinEffects.get(2).getCoin());
-        assertEquals("[적중시] 화상 횟수 1 증가", offenseSkill3CoinEffects.get(2).getEffect());
-
+        assertEquals(new ArrayList<>(List.of("[적중시] 화상 횟수 1 증가")), offenseSkill3CoinEffects.get(2).getEffect());
     }
 }

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @Entity
 @NoArgsConstructor
@@ -16,15 +18,15 @@ public class OffenseSkillCoinEffect {
 
     private Integer coin;
 
-    @Lob
-    private String effect;
+    @ElementCollection
+    private List<String> effect;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "offense_skill_id")
     private OffenseSkill offenseSkill;
 
     @Builder
-    public OffenseSkillCoinEffect(Integer coin, String effect, OffenseSkill offenseSkill) {
+    public OffenseSkillCoinEffect(Integer coin, List<String> effect, OffenseSkill offenseSkill) {
         this.coin = coin;
         this.effect = effect;
         setOffenseSkill(offenseSkill);

@@ -1,27 +1,30 @@
 package com.limbus.api.domain.identity;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Lob;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Embeddable
 @Getter
 @NoArgsConstructor
 public class Sanity {
 
-    @Lob
-    private String panic;
+    @ElementCollection
+    private List<String> panic;
 
-    @Lob
-    private String factorsIncreasingSanity;
+    @ElementCollection
+    private List<String> factorsIncreasingSanity;
 
-    @Lob
-    private String factorsDecreasingSanity;
+    @ElementCollection
+    private List<String> factorsDecreasingSanity;
 
     @Builder
-    public Sanity(String panic, String factorsIncreasingSanity, String factorsDecreasingSanity) {
+    public Sanity(List<String> panic, List<String> factorsIncreasingSanity, List<String> factorsDecreasingSanity) {
         this.panic = panic;
         this.factorsIncreasingSanity = factorsIncreasingSanity;
         this.factorsDecreasingSanity = factorsDecreasingSanity;

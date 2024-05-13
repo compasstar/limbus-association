@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,7 +51,10 @@ class DefenseSkillRepositoryTest {
         assertEquals(4, defenseSkill.getCoinPower());
         assertEquals(1, defenseSkill.getCoinNumber());
         assertEquals(1, defenseSkill.getWeight());
-        assertEquals("[사용시] 조작 패널에서 자신의 양 옆에 위치한 아군의 정신력 5 회복", defenseSkill.getEffect());
+
+        List<String> effectDefense = new ArrayList<>();
+        effectDefense.add("[사용시] 조작 패널에서 자신의 양 옆에 위치한 아군의 정신력 5 회복");
+        assertEquals(effectDefense, defenseSkill.getEffect());
     }
 
 }

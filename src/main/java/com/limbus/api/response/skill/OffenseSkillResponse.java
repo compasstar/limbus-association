@@ -22,7 +22,7 @@ public class OffenseSkillResponse {
     private Integer coinPower;
     private Integer coinNumber;
     private Integer weight;
-    private String effect;
+    private List<String> effect;
     private List<OffenseSkillCoinEffectResponse> offenseSkillCoinEffects = new ArrayList<>();
 
     public OffenseSkillResponse(OffenseSkill offenseSkill) {
