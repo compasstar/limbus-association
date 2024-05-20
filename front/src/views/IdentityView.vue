@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {computed, defineProps, ref} from "vue";
+import {computed, defineProps, onMounted, type Ref, ref} from "vue";
 import axios from "axios";
 
 const props = defineProps({
@@ -10,70 +10,6 @@ const props = defineProps({
   }
 });
 
-const identityInit: Identity = {
-  sinner: "",
-  name: "",
-  rarity: 0,
-  status: {
-    hp: 100,
-    minSpeed: 0,
-    maxSpeed: 0,
-    defenseLevel: 0
-  },
-  resistances: {
-    slashResistance: 0,
-    pierceResistance: 0,
-    bluntResistance: 0
-  },
-  sanity: {
-    panic: [],
-    factorsIncreasingSanity: [],
-    factorsDecreasingSanity: [],
-  },
-  offenseSkills: [{
-    slot: 1,
-    name: "Offensive Skill",
-    level: 1,
-    offenseType: "Physical",
-    sinType: "Greed",
-    amount: 30,
-    skillPower: 60,
-    coinPower: 20,
-    coinNumber: 5,
-    weight: 10,
-    effect: [],
-    offenseSkillCoinEffects: [
-      {
-        coin: 1,
-        effect: []
-      },
-      {
-        coin: 2,
-        effect: []
-      }
-    ]
-  }],
-  defenseSkills: [{
-    name: "Defensive Skill",
-    level: 1,
-    defenseType: "Physical",
-    sinType: "Greed",
-    skillPower: 50,
-    coinPower: 20,
-    coinNumber: 1,
-    effect: [],
-    weight: 1,
-  }],
-  passiveSkills: [{
-    support: false,
-    name: "Passive Skill",
-    sinType: "Greed",
-    passiveType: "Buff",
-    amount: 10,
-    effect: []
-  }]
-};
-const identity = ref(identityInit);
 
 interface Identity {
   sinner: string;
@@ -152,11 +88,80 @@ interface Name {
   englishName: string;
 }
 
+/**
+ * 인격 정보 불러오기
+ */
+const defaultIdentity: Identity = {
+  sinner: "",
+  name: "",
+  rarity: 0,
+  status: {
+    hp: 100,
+    minSpeed: 0,
+    maxSpeed: 0,
+    defenseLevel: 0
+  },
+  resistances: {
+    slashResistance: 0,
+    pierceResistance: 0,
+    bluntResistance: 0
+  },
+  sanity: {
+    panic: [],
+    factorsIncreasingSanity: [],
+    factorsDecreasingSanity: [],
+  },
+  offenseSkills: [{
+    slot: 1,
+    name: "Offensive Skill",
+    level: 1,
+    offenseType: "Physical",
+    sinType: "Greed",
+    amount: 30,
+    skillPower: 60,
+    coinPower: 20,
+    coinNumber: 5,
+    weight: 10,
+    effect: [],
+    offenseSkillCoinEffects: [
+      {
+        coin: 1,
+        effect: []
+      },
+      {
+        coin: 2,
+        effect: []
+      }
+    ]
+  }],
+  defenseSkills: [{
+    name: "Defensive Skill",
+    level: 1,
+    defenseType: "Physical",
+    sinType: "Greed",
+    skillPower: 50,
+    coinPower: 20,
+    coinNumber: 1,
+    effect: [],
+    weight: 1,
+  }],
+  passiveSkills: [{
+    support: false,
+    name: "Passive Skill",
+    sinType: "Greed",
+    passiveType: "Buff",
+    amount: 10,
+    effect: []
+  }]
+};
+const identity = ref(defaultIdentity);
+onMounted(() => {
+  axios.get(`/api/identities/${props.englishName}`)
+      .then((response) => {
+        identity.value = response.data;
+      });
+})
 
-axios.get(`/api/identities/${props.englishName}`)
-    .then((response) => {
-      identity.value = response.data;
-    });
 
 /**
  * 패시브, 서포트패시브 저장
@@ -172,14 +177,14 @@ const nonSupportPassives = computed(() => {
  * 수감자 검색
  */
 const searchInput = ref("")
-const searchIdentitiesInit: Name[] = [];
-const searchIdentities = ref(searchIdentitiesInit);
+const searchIdentities:Ref<Name[]> = ref([]);
 const search = function () {
   axios.get(`/api/identities/search?name=${searchInput.value}`)
       .then((response) => {
         searchIdentities.value = response.data.names;
       })
 }
+
 const replaceIdentity = function (englishName: string) {
   window.location.href = `/identities/${englishName}`;
 }
