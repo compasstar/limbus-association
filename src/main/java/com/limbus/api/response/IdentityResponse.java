@@ -18,6 +18,7 @@ public class IdentityResponse {
 
     private String sinner;
     private String name;
+    private String englishName;
     private Integer rarity;
     private Status status;
     private Resistances resistances;
@@ -29,6 +30,7 @@ public class IdentityResponse {
     public IdentityResponse(Identity identity) {
         sinner = identity.getSinner() != null ? identity.getSinner().getName() : null;
         name = identity.getName();
+        englishName = identity.getEnglishName();
         rarity = identity.getRarity();
         status = identity.getStatus();
         resistances = identity.getResistances();

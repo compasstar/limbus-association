@@ -2,6 +2,7 @@ package com.limbus.api.controller;
 
 import com.limbus.api.response.IdentityResponse;
 import com.limbus.api.response.IdentitySearchResponse;
+import com.limbus.api.response.Result;
 import com.limbus.api.service.IdentityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,17 @@ public class IdentityController {
     }
 
     @GetMapping("/identities/search")
-    public IdentitySearchResponse searchIdentity(@RequestParam(name = "name") String name) {
-        IdentitySearchResponse identitySearchResponse = identityService.searchIdentity(name);
-        return identityService.searchIdentity(name);
+    public Result<List<IdentityResponse>> searchIdentity(@RequestParam(name = "name") String name) {
+        return new Result<>(identityService.searchIdentity(name));
+    }
+
+    @GetMapping("/identities/search/sinner")
+    public Result<List<IdentityResponse>> searchIdentityBySinner(@RequestParam(name = "sinner") String sinner) {
+        return new Result<>(identityService.searchIdentityBySinner(sinner));
+    }
+
+    @GetMapping("/identities")
+    public Result<List<IdentityResponse>> getAllIdentities() {
+        return new Result<>(identityService.getAllIdentities());
     }
 }

@@ -2,98 +2,22 @@
 
 import {computed, defineProps, onMounted, type Ref, ref} from "vue";
 import axios from "axios";
+import type {Identity, Name} from "@/types/Identity";
 
+
+/**
+ * Identity 불러오기
+ */
 const props = defineProps({
   englishName: {
     type: [String],
     require: true,
   }
 });
-
-
-interface Identity {
-  sinner: string;
-  name: string;
-  rarity: number;
-  status: Status;
-  resistances: Resistances;
-  sanity: Sanity;
-  offenseSkills: OffenseSkill[];
-  defenseSkills: DefenseSkill[];
-  passiveSkills: PassiveSkill[];
-}
-
-interface OffenseSkill {
-  slot: number;
-  name: string;
-  level: number;
-  offenseType: string;
-  sinType: string;
-  amount: number;
-  skillPower: number;
-  coinPower: number;
-  coinNumber: number;
-  weight: number;
-  effect: string[];
-  offenseSkillCoinEffects: OffenseSkillCoinEffect[];
-}
-
-interface OffenseSkillCoinEffect {
-  coin: number;
-  effect: string[];
-}
-
-interface DefenseSkill {
-  name: string;
-  level: number;
-  defenseType: string;
-  sinType: string;
-  skillPower: number;
-  coinPower: number;
-  coinNumber: number;
-  effect: string[];
-  weight: number;
-}
-
-interface PassiveSkill {
-  support: boolean;
-  name: string;
-  sinType?: string;
-  passiveType?: string;
-  amount?: number;
-  effect: string[];
-}
-
-interface Sanity {
-  panic: string[];
-  factorsIncreasingSanity: string[];
-  factorsDecreasingSanity: string[];
-}
-
-interface Resistances {
-  slashResistance: number;
-  pierceResistance: number;
-  bluntResistance: number;
-}
-
-interface Status {
-  hp: number;
-  minSpeed: number;
-  maxSpeed: number;
-  defenseLevel: number;
-}
-
-interface Name {
-  name: string;
-  englishName: string;
-}
-
-/**
- * 인격 정보 불러오기
- */
-const defaultIdentity: Identity = {
+const identity: Ref<Identity> = ref({
   sinner: "",
   name: "",
+  englishName: "",
   rarity: 0,
   status: {
     hp: 100,
@@ -153,14 +77,13 @@ const defaultIdentity: Identity = {
     amount: 10,
     effect: []
   }]
-};
-const identity = ref(defaultIdentity);
+});
 onMounted(() => {
   axios.get(`/api/identities/${props.englishName}`)
       .then((response) => {
         identity.value = response.data;
       });
-})
+});
 
 
 /**
@@ -177,14 +100,14 @@ const nonSupportPassives = computed(() => {
  * 수감자 검색
  */
 const searchInput = ref("")
-const searchIdentities:Ref<Name[]> = ref([]);
+const searchIdentitiesInit: Name[] = [];
+const searchIdentities = ref(searchIdentitiesInit);
 const search = function () {
   axios.get(`/api/identities/search?name=${searchInput.value}`)
       .then((response) => {
         searchIdentities.value = response.data.names;
       })
 }
-
 const replaceIdentity = function (englishName: string) {
   window.location.href = `/identities/${englishName}`;
 }
