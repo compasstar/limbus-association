@@ -18,6 +18,4 @@ public interface IdentityRepository extends JpaRepository<Identity, Long>, Ident
     //수감자 영문이름으로 검색
     Optional<Identity> findByEnglishName(String englishName);
 
-    //수감자 이름으로 검색
-    List<Identity> findByName(String name);
 }

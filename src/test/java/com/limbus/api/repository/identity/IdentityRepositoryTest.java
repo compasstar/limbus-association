@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @Transactional
-@Rollback(value = false)
 class IdentityRepositoryTest {
 
     @Autowired
@@ -29,6 +28,7 @@ class IdentityRepositoryTest {
 
     @BeforeEach
     void before() {
+        identityRepository.deleteAll();
         beforeTest.saveIdentities();
     }
 

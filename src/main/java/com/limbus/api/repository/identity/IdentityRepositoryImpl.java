@@ -6,7 +6,7 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-import static com.limbus.api.domain.identity.QIdentity.*;
+import static com.limbus.api.domain.identity.QIdentity.identity;
 
 public class IdentityRepositoryImpl implements IdentityRepositoryCustom {
 
