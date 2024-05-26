@@ -2,10 +2,15 @@ spring:
   profiles:
     active: local
   datasource:
-    url: jdbc:h2:tcp://localhost/~/limbus
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/limbus?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: dlwoghd98
+#  datasource:
+#    url: jdbc:h2:tcp://localhost/~/limbus
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
 
   data:
     web:
