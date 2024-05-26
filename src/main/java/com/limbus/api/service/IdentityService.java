@@ -1,12 +1,14 @@
 package com.limbus.api.service;
 
 import com.limbus.api.domain.identity.Identity;
+import com.limbus.api.domain.type.Sinner;
 import com.limbus.api.repository.identity.IdentityRepository;
 import com.limbus.api.response.IdentityResponse;
 import com.limbus.api.response.IdentitySearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,8 +29,31 @@ public class IdentityService {
         return new IdentityResponse(identity);
     }
 
-    public IdentitySearchResponse searchIdentity(String name) {
+    public List<IdentityResponse> searchIdentity(String name) {
+        List<IdentityResponse> identityResponses = new ArrayList<>();
         List<Identity> identities = identityRepository.findByPartName(name);
-        return new IdentitySearchResponse(identities);
+        identities.forEach(identity -> {
+            identityResponses.add(new IdentityResponse(identity));
+        });
+        return identityResponses;
+    }
+
+    public List<IdentityResponse> searchIdentityBySinner(String sinner) {
+        List<IdentityResponse> identityResponses = new ArrayList<>();
+        List<Identity> identities = identityRepository.findBySinner(Sinner.valueOf(sinner));
+        identities.forEach(identity -> {
+            identityResponses.add(new IdentityResponse(identity));
+        });
+        return identityResponses;
+    }
+
+
+    public List<IdentityResponse> getAllIdentities() {
+        List<IdentityResponse> identityResponses = new ArrayList<>();
+        List<Identity> identities = identityRepository.findAll();
+        identities.forEach(identity -> {
+            identityResponses.add(new IdentityResponse(identity));
+        });
+        return identityResponses;
     }
 }

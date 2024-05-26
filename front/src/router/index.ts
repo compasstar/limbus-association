@@ -4,6 +4,7 @@ import WriteView from '../views/WriteView.vue'
 import ReadView from '../views/ReadView.vue'
 import EditView from '../views/EditView.vue'
 import IdentityView from "@/views/IdentityView.vue";
+import IdentityAllView from "@/views/IdentityAllView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,15 +36,12 @@ const router = createRouter({
       name: 'identity',
       component: IdentityView,
       props: true
+    },
+    {
+      path: '/identities',
+      name: 'allIdentity',
+      component: IdentityAllView,
     }
-//     {
-//       path: '/about',
-//       name: 'about',
-//       // route level code-splitting
-//       // this generates a separate chunk (About.[hash].js) for this route
-//       // which is lazy-loaded when the route is visited.
-//       component: () => import('../views/AboutView.vue')
-//     }
   ]
 })
 

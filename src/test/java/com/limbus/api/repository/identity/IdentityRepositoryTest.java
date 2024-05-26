@@ -90,6 +90,7 @@ class IdentityRepositoryTest {
         assertEquals(0, identities_YI_SANG.size());
     }
 
+
     @Test
     void findByEnglishNameTest() {
         //when
