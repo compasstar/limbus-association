@@ -32,6 +32,7 @@ class OffenseSkillRepositoryTest {
 
     @BeforeEach
     void before() {
+        identityRepository.deleteAll();
         beforeTest.saveIdentities();
     }
 
@@ -69,7 +70,7 @@ class OffenseSkillRepositoryTest {
 
         List<String> effect1 = new ArrayList<>();
         effect1.add("[전투 시작시] 조작 패널에서 자신의 양 옆의 아군에게 방어 레벨 증가 2 부여");
-        effect1.add("[사용시] 다음 턴에 최대 체력이 가장 높은 아군의 왼쪽 슬롯의 도발치가 (가장 높은 공명 수 )만큼 증가 (턴 당 1회)");
+        effect1.add("[사용시] 다음 턴에 최대 체력이 가장 높은 아군의 왼쪽 슬롯의 도발치가 (가장 높은 공명 수)만큼 증가 (턴 당 1회)");
         effect1.add("- 가장 높은 완전 공명의 합이 4이상이면, 효과 발동 시 보호 1 부여");
         assertEquals(effect1, offenseSkill1.getEffect());
 
