@@ -57,6 +57,7 @@ clean {
 	delete file('src/main/generated')
 }
 
+//모든 테스트 케이스 실행
 test {
 	outputs.dir snippetsDir
 }
@@ -67,10 +68,16 @@ asciidoctor {
 	dependsOn test
 }
 
+//spring rest docs 문서 생성
 bootJar {
 	dependsOn asciidoctor
 	copy {
 		from asciidoctor.outputDir
 		into "src/main/resources/static/docs"
 	}
+}
+
+//build 할 때 bootJar 만 생성되고, 일반(plain.jar)는 생성되지 않도록 설정
+jar {
+	enabled = false
 }
