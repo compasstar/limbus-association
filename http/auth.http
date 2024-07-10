@@ -7,3 +7,8 @@ Content-Type: application/json
   "email": "hodolman88@gmail.com",
   "password": "1234"
 }
+
+### 인증 페이지 요청
+GET http://localhost:8080/foo
+Content-Type: application/json
+Cookie: SESSION=84919b63-78ae-41ae-b55c-b5a903539a87
