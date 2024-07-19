@@ -4,6 +4,11 @@ import com.limbus.api.config.data.UserSession;
 import com.limbus.api.domain.Session;
 import com.limbus.api.exception.Unauthorized;
 import com.limbus.api.repository.SessionRepository;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +18,9 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+
+import javax.crypto.SecretKey;
+import java.util.Base64;
 
 /**
  * 파라미터로 특정 클래스(DTO)가 들어왔을 때, 해당 클래스의 변수값들을 미리 여기서 채워줄 수 있다.
@@ -25,7 +33,9 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @RequiredArgsConstructor
 public class AuthResolver implements HandlerMethodArgumentResolver {
 
+    private static final String KEY = "cdTqQ6AXjQj1Ml306xIhexxcHW4tCWOUn923Zx2pUUo=";
     private final SessionRepository sessionRepository;
+
 
     /**
      * 받은 파라미터의 타입이 UserSession.class 라면 true 를 반환한다
@@ -37,21 +47,27 @@ public class AuthResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        HttpServletRequest servletRequest = webRequest.getNativeRequest(HttpServletRequest.class);
-        if (servletRequest == null) {
-            log.error("servletRequest null");
+
+        String jws = webRequest.getHeader("Authorization");
+        if (jws == null || jws.isEmpty()) {
             throw new Unauthorized();
         }
 
-        Cookie[] cookies = servletRequest.getCookies();
-        if (cookies.length == 0) {
-            log.error("쿠키가 없음");
+        SecretKey key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(KEY));
+        try {
+            Jws<Claims> claims = Jwts.parser()
+                    .verifyWith(key)
+                    .build()
+                    .parseSignedClaims(jws);
+
+            //사실 아래 코드는 필요 없음.
+            // 결국 클라이언트로 return 하는 값은 Controller 의 return 값이다. 아래의 return 과는 무관함.
+            String userId = claims.getBody().getSubject();
+            return new UserSession(Long.parseLong(userId));
+        } catch (JwtException e) {
             throw new Unauthorized();
         }
 
-        String accessToken = cookies[0].getValue();
-        Session session = sessionRepository.findByAccessToken(accessToken).orElseThrow(Unauthorized::new);
-
-        return new UserSession(session.getUser().getId());
+//        return new UserSession(session.getUser().getId());
     }
 }
